@@ -1,0 +1,38 @@
+SATISH DHAWALE | WWW.SKILLCOURSE.IN
+LinkedIn 30 Days Tally Course by Satish Dhawale
+
+| Day        | Lesson Name                              |
+|------------|----------------------------------------|
+| Day - 1    | Tally Introduction                      |
+| Day - 2    | Installing and Setting up Tally         |
+| Day - 3    | Company Creation in Tally               |
+| Day - 4    | Ledger Creation and Management          |
+| Day - 5    | Group Creation and Management           |
+| Day - 6    | Voucher Entry Basics                    |
+| Day - 7    | Payment, Receipt, and Contra Vouchers   |
+| Day - 8    | Sales and Purchase Vouchers             |
+| Day - 9    | Debit Note and Credit Note Vouchers     |
+| Day - 10   | Journal Vouchers                        |
+| Day - 11   | Inventory Management Basics             |
+| Day - 12   | Stock Group and Stock Item Creation     |
+| Day - 13   | Unit of Measure and Godown Management   |
+| Day - 14   | Purchase and Sales Orders               |
+| Day - 15   | Delivery Challan and Rejection Vouchers |
+| Day - 16   | Bill of Materials (BOM) in Tally        |
+| Day - 17   | GST Configuration and Setup            |
+| Day - 18   | GST Invoices and Reports                |
+| Day - 19   | TDS and TCS in Tally                    |
+| Day - 20   | Payroll Management                      |
+| Day - 21   | Employee Records and Salary Processing  |
+| Day - 22   | Attendance and Leave Management         |
+| Day - 23   | Bank Reconciliation                     |
+| Day - 24   | Cost Centers and Cost Categories        |
+| Day - 25   | Budgets and Controls in Tally           |
+| Day - 26   | Financial Statements and Reports        |
+| Day - 27   | Profit and Loss Statement               |
+| Day - 28   | Balance Sheet Preparation               |
+| Day - 29   | Ratio Analysis in Tally                 |
+| Day - 30   | Advanced Features and Tally ERP 9 Tips  |
+
+Thanks for Watching
+www.skillcourse.in

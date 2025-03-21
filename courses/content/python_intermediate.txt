@@ -1,0 +1,24 @@
+________________________________________
+Day 4: Functions 
+•	Defining functions in Python using def.
+•	Understanding function arguments, return values, and scope.
+ Assignment 
+•	Write a function to compute the sum of a list of numbers using loops.
+________________________________________
+Day 5: Regular Expressions
+1. Introduction to Regular Expressions 
+•	Syntax and patterns in regular expressions.
+•	Using the re module for pattern matching.
+2. Practice 
+•	Write a program that uses regular expressions to validate phone numbers, emails, or dates.
+•	Programs on conditional statements, loops, functions
+________________________________________
+Day 6: Object-Oriented Programming (OOP)
+1. Introduction to OOP Concepts 
+•	Classes, objects, methods, attributes.
+•	Introduction to inheritance and polymorphism.
+2. Inheritance and OOP Example 
+•	Write a simple class hierarchy (e.g., creating a base class Animal and derived classes Dog and Cat).
+3. Assignment
+•	Create a basic class structure, use inheritance, and instantiate objects.
+________________________________________

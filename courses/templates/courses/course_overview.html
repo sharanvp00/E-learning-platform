@@ -1,0 +1,13 @@
+{% extends 'courses/base.html' %}
+
+{% block title %}{{ course_name }} Overview{% endblock %}
+
+{% block content %}
+    <h1>{{ course_name }} Course</h1>
+    <div class="level-links">
+        {% for level in levels %}
+        <a href="{% url 'courses:course_detail' course_name=course_name level=level %}">{{ level }}</a>
+    {% endfor %}
+    
+    </div>
+{% endblock %}

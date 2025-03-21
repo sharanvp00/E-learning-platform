@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate of Completion</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Open+Sans:wght@400;600&display=swap');
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #fdf8f3;
+            position: relative;
+        }
+
+        .download-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            background-color: #d4af37;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        .download-btn:hover {
+            background-color: #b29030;
+        }
+
+        .certificate {
+            width: 850px;
+            height: auto;
+            border: 12px solid #d4af37;
+            padding: 50px;
+            text-align: center;
+            background: #ffffff url("{% static 'images/gold-corner-border.png' %}") no-repeat center;
+            background-size: cover;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .certificate .header {
+            font-size: 40px;
+            font-weight: 700;
+            color: #4a2c2a;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .certificate .subheader {
+            font-size: 22px;
+            color: #7b4b43;
+            margin-bottom: 20px;
+        }
+
+        .certificate .content {
+            font-size: 20px;
+            color: #5c3d31;
+            margin: 15px 0;
+        }
+
+        .certificate .recipient {
+            font-size: 36px;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: #4a2c2a;
+            margin: 20px 0;
+            text-transform: capitalize;
+        }
+
+        .certificate .course {
+            font-size: 26px;
+            font-weight: bold;
+            color: #6d4c41;
+            margin-top: 10px;
+        }
+
+        .certificate .date {
+            font-size: 18px;
+            font-weight: 600;
+            margin-top: 20px;
+            color: #6d4c41;
+        }
+
+        .certificate .signatures {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+
+        .certificate .signatures .signature {
+            text-align: center;
+            font-size: 16px;
+            color: #6d4c41;
+        }
+
+        .certificate .signatures .signature .name {
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .certificate .ribbon {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .certificate .ribbon img {
+            width: 70px;
+        }
+    </style>
+</head>
+<body>
+    <a href="{% url 'download_certificate' %}" class="download-btn">Download Certificate</a>
+    
+    {% if cert %}
+    <div class="certificate">
+        <div class="header">CERTIFICATE</div>
+        <div class="subheader">OF COMPLETION</div>
+        <div class="content">This Certificate Is Proudly Presented To</div>
+        <div class="recipient">{{ request.user.username }}</div>
+        <div class="content">For Successfully Completing the Course</div>
+        <div class="course">Python</div>
+        <div class="date">Date Issued: {{ cert.date_issued }}</div>
+
+        <div class="signatures">
+            <div class="signature">
+                <div class="name"></div>
+                <div></div>
+            </div>
+            <div class="signature">
+                <div class="name">Augustin</div>
+                <div>Director</div>
+            </div>
+        </div>
+
+        <div class="ribbon">
+            <img src="{% static 'images/hope_logo.png' %}" alt="Ribbon">
+        </div>
+    </div>
+    {% else %}
+    <div class="certificate">
+        <div class="header">CERTIFICATE</div>
+        <div class="subheader">NOT AVAILABLE</div>
+        <div class="content">No certificate available. Please complete the quiz.</div>
+    </div>
+    {% endif %}
+</body>
+</html>

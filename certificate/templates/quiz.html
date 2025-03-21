@@ -1,0 +1,158 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Page Quiz</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            display: flex;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(to right, #6dd5ed, #2193b0);
+        }
+
+        .container {
+            width: 800px;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .question {
+            display: none;
+        }
+
+        .active {
+            display: block;
+        }
+
+        .question p {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: #444;
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-size: 1.2rem;
+            margin: 8px 0;
+            padding: 10px;
+            background: #f1faff;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        label:hover {
+            background: #d1f0ff;
+        }
+
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        .navigation {
+            margin-top: 30px;
+        }
+
+        button {
+            padding: 12px 18px;
+            margin: 5px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            font-size: 1rem;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        button:disabled {
+            background-color: #b0c4de;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2> Quiz!</h2>
+        
+        <form id="quiz-form" method="post">
+            {% csrf_token %}
+            {% for question in questions %}
+                <div class="question {% if forloop.first %}active{% endif %}" id="question_{{ question.id }}">
+                    <p>{{ question.text }}</p>
+                    <label><input type="radio" name="question_{{ question.id }}" value="1"> {{ question.option1 }}</label>
+                    <label><input type="radio" name="question_{{ question.id }}" value="2"> {{ question.option2 }}</label>
+                    <label><input type="radio" name="question_{{ question.id }}" value="3"> {{ question.option3 }}</label>
+                    <label><input type="radio" name="question_{{ question.id }}" value="4"> {{ question.option4 }}</label>
+                </div>
+            {% endfor %}
+            <div class="navigation">
+                <button type="button" id="prev" disabled>⬅ Previous</button>
+                <button type="button" id="next">Next ➡</button>
+                <button type="submit" id="submit" style="display: none;">🚀 Submit</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        let currentQuestion = 0;
+        const questions = document.querySelectorAll(".question");
+        const prevButton = document.getElementById("prev");
+        const nextButton = document.getElementById("next");
+        const submitButton = document.getElementById("submit");
+
+        function updateButtons() {
+            prevButton.disabled = currentQuestion === 0;
+            nextButton.style.display = currentQuestion === questions.length - 1 ? "none" : "inline-block";
+            submitButton.style.display = currentQuestion === questions.length - 1 ? "inline-block" : "none";
+        }
+
+        function showQuestion(index) {
+            questions.forEach((q, i) => q.classList.toggle("active", i === index));
+            updateButtons();
+        }
+
+        nextButton.addEventListener("click", () => {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                showQuestion(currentQuestion);
+            }
+        });
+
+        prevButton.addEventListener("click", () => {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion(currentQuestion);
+            }
+        });
+
+        showQuestion(currentQuestion);
+    </script>
+</body>
+</html>

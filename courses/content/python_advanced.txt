@@ -1,0 +1,28 @@
+Day 7: Object-Oriented Programming (OOP)
+•	Abstraction
+•	Encapsulation
+Day 8: 1. Polymorphism
+2. Programming Paradigms 
+•	Overview of procedural, object-oriented, and functional programming.
+•	Simple examples illustrating each paradigm.
+________________________________________
+Day 9: Data Visualization (Matplotlib & Seaborn)
+•	1. Introduction to Data Visualization 
+•	Basics of data visualization using Matplotlib.
+•	Creating line plots, subplots, and adding labels and grids.
+2. Bar and Pie Charts 
+How to visualize data using bar charts and pie charts.
+3. Assignment 
+•	Plot graphs based on sample data: line plots, bar charts, and pie charts.
+________________________________________
+ Day 10: GUI with Tkinter
+1. Introduction to Tkinter 
+•	Basics of creating GUI applications using Tkinter.
+•	Introduction to widgets (buttons, labels, text boxes).
+2. Creating a Simple GUI Application 
+•	Develop a basic calculator or form-based application.
+3. Assignment (30 mins)
+•	Work on a simple Tkinter application.
+4. Frameworks and Conclusion 
+•	Brief overview of web frameworks like Flask and Django.
+•	Recap of the workshop, final Q&A session, and feedback.

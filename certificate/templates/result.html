@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Result</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+            background-color: #e1f5fe;
+        }
+
+        .container {
+            width: 600px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .message {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .score {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #3d5cb9;
+            margin-bottom: 15px;
+        }
+
+        .btn {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #3d5cb9;
+            color: white;
+            font-size: 1rem;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background-color: #2c4790;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Quiz Result</h2>
+
+        <!-- Display the Score -->
+        <p class="score">Your Score: {{ score }} / {{ total }}</p>
+
+        <!-- Pass/Fail Message -->
+        <p class="message">
+            {% if passed == "True" %}
+                🎉 Congratulations! You passed the quiz.
+            {% else %}
+                ❌ Better luck next time! Keep practicing!
+            {% endif %}
+        </p>
+
+        <!-- Buttons for Certificate or Retry -->
+        {% if passed == "True" %}
+            <a href="{% url 'certificate' %}" class="btn">Get Your Certificate</a>
+        {% else %}
+            <a href="{% url 'quiz' category_name=category_name %}" class="btn">Try Again</a>
+        {% endif %}
+    </div>
+</body>
+</html>

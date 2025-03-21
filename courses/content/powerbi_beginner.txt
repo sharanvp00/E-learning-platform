@@ -1,0 +1,15 @@
+SATISH DHAWALE | WWW.SKILLCOURSE.IN
+LinkedIn 30 Days Power BI Course by Satish Dhawale
+
+| Day        | Lesson Name                              |
+|------------|----------------------------------------|
+| Day - 1    | Power BI Introduction                  |
+| Day - 2    | Import Data                            |
+| Day - 3    | Data Transformation                    |
+| Day - 4    | Append Data                            |
+| Day - 5    | Modeling - Create Relationship         |
+| Day - 6    | Page Formatting                        |
+| Day - 7    | Adding Visuals Column Chart            |
+| Day - 8    | Formatting of Column and Bar Chart - 1 |
+| Day - 9    | Formatting of Column and Bar Chart - 2 |
+| Day - 10   | Formatting of Column and Bar Chart - 3 |

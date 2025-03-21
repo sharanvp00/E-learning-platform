@@ -1,0 +1,15 @@
+SATISH DHAWALE | WWW.SKILLCOURSE.IN
+LinkedIn 30 Days Power BI Course by Satish Dhawale
+
+| Day        | Lesson Name                            |
+|------------|----------------------------------------|
+| Day - 11   | Power Query Transformation             |
+| Day - 12   | Area and Line Chart Visual             |
+| Day - 13   | Formatting of Line and Area Chart      |
+| Day - 14   | Waterfall Chart and Funnel Chart       |
+| Day - 15   | Scatter Chart, Pie Chart and Donut Chart|
+| Day - 16   | Tree Map, Map and Filled Map Visuals   |
+| Day - 17   | Gauge Chart and KPI                    |
+| Day - 18   | Card and Multirow Card                 |
+| Day - 19   | New Card in Power BI                   |
+| Day - 20   | Slicer in Power BI                     |

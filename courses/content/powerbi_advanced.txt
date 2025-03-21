@@ -1,0 +1,19 @@
+SATISH DHAWALE | WWW.SKILLCOURSE.IN
+LinkedIn 30 Days Power BI Course by Satish Dhawale
+
+| Day        | Lesson Name                            |
+|------------|----------------------------------------|
+| Day - 21   | New Slicer in Power BI                 |
+| Day - 22   | New Slicer with Images in Power BI     |
+| Day - 23   | Table and Matrix                       |
+| Day - 24   | DAX Formula Sum and SumX               |
+| Day - 25   | Calculated Columns Vs Measures         |
+| Day - 26   | Date DAX Formulas                      |
+| Day - 27   | Calculate DAX Formula                  |
+| Day - 28   | Dates Between DAX Formula              |
+| Day - 29   | MTD, QTD, YTD DAX Formulas             |
+| Day - 30   | Create Interactive Dashboard           |
+
+Thanks for Watching
+www.skillcourse.in
+

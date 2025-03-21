@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Select a Quiz</h2>
+<ul>
+    <li><a href="{% url 'quiz' 'Python' %}">Python Quiz</a></li>
+    <li><a href="{% url 'quiz' 'AWS' %}">AWS Quiz</a></li>
+    <li><a href="{% url 'quiz' 'Tally' %}">Tally Quiz</a></li>
+</ul>
+{% endblock %}

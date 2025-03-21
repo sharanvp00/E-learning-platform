@@ -1,0 +1,33 @@
+
+Day 1: Introduction to Python & Installation
+1. Introduction to the Syllabus 
+•	Overview of the workshop and learning goals.
+2. Installation of Python Guide on installing Python and setting up an IDE (VS Code).
+•	Setting up Python environment.
+3. Python Basics and Data Types 
+•	Introduction to basic Python data types: int, float, str, bool.
+•	Data assignments and variable declarations.
+4. Assignment 
+•	Assignments on creating variables and using different data types.
+5. Type Conversion 
+•	Discussing type conversion (int(), str(), float()).
+•	Working with different data types.
+6. Membership Operators 
+•	Using in, not in for checking membership in lists, strings, etc.
+7. Assignment 
+•	Practice assignments on type conversion and membership operators.
+________________________________________
+Day 2: Conditional Statements
+1. Introduction to Conditional Statements 
+•	Understanding if, elif, else statements.
+2. Examples and Problem Solving 
+•	Writing programs that make decisions, like checking if a number is prime, even, or odd.
+3. Practical Assignment 
+•	Create small programs using conditionals to solve simple problems (e.g., finding the largest number among three).
+4. Working with Collections (Lists, Tuples, Dictionaries) 
+•	Brief overview of Python collections and their usage.
+________________________________________
+Day 3: Looping Concepts and Functions
+1. Loops in Python 
+•	Introduction to for and while loops.
+•	Loop control with break, continue, pass.
