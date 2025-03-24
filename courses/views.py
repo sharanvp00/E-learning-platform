@@ -39,3 +39,7 @@ def courses_list(request):
     courses = ['python', 'tally', 'aws', 'power_bi']
     context = {'courses': courses}
     return render(request, 'courses/courses_list.html', context)
+
+
+def python_content(request):
+    return render(request, 'courses/pythoncontent.html')

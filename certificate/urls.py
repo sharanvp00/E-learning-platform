@@ -11,4 +11,5 @@ urlpatterns = [
     path('quiz/<str:category_name>/', views.quiz, name='quiz'),
     path('result/<int:score>/<int:total>/<str:passed>/<str:category_name>/', views.result, name='result'),
     path('download_certificate/', views.generate_certificate_pdf, name='download_certificate'),
+     path('python-content/',views.python_content, name='python_content'),
 ]

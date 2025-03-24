@@ -160,3 +160,7 @@ def generate_certificate_pdf(request):
     p.save()
 
     return response
+
+
+def python_content(request):
+    return render(request, 'pythoncontent.html')

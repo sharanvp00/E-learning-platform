@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scrollable YouTube Video Gallery</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            overflow: auto;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 20px;
+        }
+        .theme-toggle {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .dark-mode {
+            background-color: #1e1e1e;
+            color: white;
+        }
+        .category {
+            display: flex;
+            flex-direction: column;
+        }
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .videos {
+            display: flex;
+            overflow-x: auto;
+            gap: 15px;
+            padding-bottom: 10px;
+            white-space: nowrap;
+        }
+        .video {
+            width: 320px;
+            flex: 0 0 auto;
+            background: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+        .dark-mode .video {
+            background: #333;
+        }
+        .video iframe {
+            width: 100%;
+            height: 180px;
+            border-radius: 8px;
+        }
+        .caption {
+            margin-top: 10px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+    <div class="container">
+        <div class="category">
+            <div class="title">Beginner</div>
+            <div class="videos">
+                <div class="video">
+                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+                    <div class="caption">Beginner Video 1</div>
+                </div>
+                <div class="video">
+                    <iframe src="https://www.youtube.com/embed/3JZ_D3ELwOQ" allowfullscreen></iframe>
+                    <div class="caption">Beginner Video 2</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="category">
+            <div class="title">Intermediate</div>
+            <div class="videos">
+                <div class="video">
+                    <iframe src="https://www.youtube.com/embed/ktjafK4SgWM" allowfullscreen></iframe>
+                    <div class="caption">Intermediate Video 1</div>
+                </div>
+                <div class="video">
+                    <iframe src="https://www.youtube.com/embed/LXb3EKWsInQ" allowfullscreen></iframe>
+                    <div class="caption">Intermediate Video 2</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="category">
+            <div class="title">Advanced</div>
+            <div class="videos">
+                <div class="video">
+                    <iframe src="https://www.youtube.com/embed/tgbNymZ7vqY" allowfullscreen></iframe>
+                    <div class="caption">Advanced Video 1</div>
+                </div>
+                <div class="video">
+                    <iframe src="https://www.youtube.com/embed/Zi_XLOBDo_Y" allowfullscreen></iframe>
+                    <div class="caption">Advanced Video 2</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            let themeButton = document.querySelector('.theme-toggle');
+            if (document.body.classList.contains('dark-mode')) {
+                themeButton.textContent = '☀️';
+            } else {
+                themeButton.textContent = '🌙';
+            }
+        }
+    </script>
+</body>
+</html>
