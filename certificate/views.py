@@ -4,8 +4,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.urls import reverse
 from django.contrib.auth.models import User
-from .models import Question, Certificate, Category
-
+from .models import Question, Certificate, Category, Profile
+from .forms import ProfileUpdateForm
 from django.http import HttpResponse
 from reportlab.lib.pagesizes import landscape, letter
 from reportlab.pdfgen import canvas
@@ -105,18 +105,12 @@ def result(request, score, total, passed, category_name):
 def certificate(request):
     user_certificates = Certificate.objects.filter(user=request.user)
 
-    # Debugging: check if multiple certificates exist and their category
-    for cert in user_certificates:
-        print(cert.category.name)  # See all certificates for this user
-
     if user_certificates.exists():
-        cert = user_certificates.latest('id')  # Are you sure this is the right one?
-        print(f"Selected certificate: {cert.category.name}")  # Confirm which one is selected
+        cert = user_certificates.latest('id')
     else:
         cert = None
 
     return render(request, 'certificate.html', {'cert': cert})
-
 
 # Generate Certificate PDF
 @login_required
@@ -161,6 +155,37 @@ def generate_certificate_pdf(request):
 
     return response
 
+# Profile View
+@login_required
+def profile_view(request):
+    profile, created = Profile.objects.get_or_create(user=request.user)
 
-def python_content(request):
-    return render(request, 'pythoncontent.html')
+    if request.method == 'POST':
+        form = ProfileUpdateForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')  # Redirect to refresh the profile page after update
+    else:
+        form = ProfileUpdateForm(instance=profile)
+
+    return render(request, 'profile.html', {'form': form, 'profile': profile})
+
+# Profile Update View
+@login_required
+def profile_update(request):
+    try:
+        # Get the user's profile
+        profile = request.user.profile
+    except Profile.DoesNotExist:
+        # If no profile exists, create one (optional)
+        profile = Profile.objects.create(user=request.user)
+
+    if request.method == 'POST':
+        form = ProfileUpdateForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()  # Save the updated profile (bio and profile_picture)
+            return redirect('profile')  # Redirect to the profile view page after update
+    else:
+        form = ProfileUpdateForm(instance=profile)
+
+    return render(request, 'profile_update.html', {'form': form})

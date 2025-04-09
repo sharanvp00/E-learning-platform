@@ -1,0 +1,13 @@
+<!-- profile_update.html -->
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div>
+        <label for="profile_picture">Profile Picture</label>
+        {{ form.profile_picture }}
+    </div>
+    <div>
+        <label for="bio">Bio</label>
+        {{ form.bio }}
+    </div>
+    <button type="submit">Update Profile</button>
+</form>

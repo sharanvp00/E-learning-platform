@@ -9,7 +9,11 @@ from .models import Question, Certificate, Category
 from django import forms
 from django.utils.safestring import mark_safe
 from django.template.loader import render_to_string
+from django.contrib import admin
+from .models import Profile
 
+
+admin.site.register(Profile)
 
 class GenerateQuestionsForm(forms.Form):
     num_questions = forms.IntegerField(label="Number of Questions to Generate", min_value=1, max_value=10, initial=1)
