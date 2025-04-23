@@ -1,5 +1,7 @@
 import os
 from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from .models import Course, CourseContent
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # Project root
 
@@ -40,6 +42,22 @@ def courses_list(request):
     context = {'courses': courses}
     return render(request, 'courses/courses_list.html', context)
 
-
 def python_content(request):
     return render(request, 'courses/pythoncontent.html')
+    
+
+
+def python_masterclass(request):
+    return render(request, 'courses/python_masterclass.html')
+
+def python_inside(request):
+    return render(request, 'courses/Python_inside.html')
+
+def python_install_setup(request):
+    return render(request, 'courses/Python_install_setup.html')
+
+def python_basic(request):
+    return render(request, 'courses/Python_basic.html')
+
+def python_advance(request):
+    return render(request, 'courses/Python_Advance.html')
