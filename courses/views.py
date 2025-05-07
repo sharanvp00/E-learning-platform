@@ -61,3 +61,30 @@ def python_basic(request):
 
 def python_advance(request):
     return render(request, 'courses/Python_Advance.html')
+
+
+def aws_masterclass(request):
+    return render(request, 'courses/aws_masterclass.html')
+
+def aws_intro(request):
+    return render(request, 'courses/aws_intro.html')
+
+def aws_s3(request):
+    return render(request, 'courses/aws_s3.html')
+
+def aws_setup(request):
+    return render(request, 'courses/aws_setup.html')
+
+
+def tally_masterclass(request):
+    return render(request, 'courses/tally_masterclass.html')
+
+
+def tally_intro(request):
+    return render(request, 'courses/tally_intro.html')
+
+def tally_setup(request):
+    return render(request, 'courses/tally_setup.html')
+
+def tally_advance(request):
+    return render(request, 'courses/tally_advanced.html')

@@ -1,0 +1,117 @@
+{% extends "admin/change_form.html" %}
+{% load i18n admin_urls static %}
+
+{% block extrastyle %}{{ block.super }}
+<style>
+    .category-stats {
+        margin-top: 20px;
+        padding: 20px;
+        border: 1px solid #e9ecef;
+        border-radius: 5px;
+        background-color: #f8f9fa;
+    }
+    
+    .category-stats h3 {
+        margin-top: 0;
+        color: #0d6efd;
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 15px;
+    }
+    
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 15px;
+    }
+    
+    .stat-item {
+        background-color: white;
+        border-radius: 5px;
+        padding: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        text-align: center;
+    }
+    
+    .stat-value {
+        font-size: 24px;
+        font-weight: 600;
+        color: #0d6efd;
+        margin-bottom: 5px;
+    }
+    
+    .stat-label {
+        color: #6c757d;
+        font-size: 14px;
+    }
+    
+    .generate-questions-section {
+        margin-top: 20px;
+        padding: 20px;
+        border: 1px solid #e9ecef;
+        border-radius: 5px;
+        background-color: #f8f9fa;
+    }
+    
+    .generate-questions-section h3 {
+        margin-top: 0;
+        color: #0d6efd;
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 15px;
+    }
+    
+    .ai-info {
+        background-color: #cff4fc;
+        border: 1px solid #9eeaf9;
+        border-radius: 5px;
+        padding: 10px 15px;
+        margin-bottom: 15px;
+        color: #055160;
+    }
+</style>
+{% endblock %}
+
+{% block admin_change_form_document_ready %}{{ block.super }}
+<script>
+    (function($) {
+        // Only add the stats section if we're editing an existing category
+        if ($('input[name="_save"]').length) {
+            var categoryId = '{{ original.pk }}';
+            if (categoryId) {
+                // Add the category stats section
+                var statsHtml = '<div class="category-stats">' +
+                    '<h3>Category Statistics</h3>' +
+                    '<div class="stats-grid">' +
+                    '<div class="stat-item">' +
+                    '<div class="stat-value">{{ question_count|default:"0" }}</div>' +
+                    '<div class="stat-label">Questions</div>' +
+                    '</div>' +
+                    '<div class="stat-item">' +
+                    '<div class="stat-value">{{ certificate_count|default:"0" }}</div>' +
+                    '<div class="stat-label">Certificates</div>' +
+                    '</div>' +
+                    '<div class="stat-item">' +
+                    '<div class="stat-value">{{ pass_rate|default:"0" }}%</div>' +
+                    '<div class="stat-label">Pass Rate</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>';
+                
+                // Add the AI question generation section
+                var aiHtml = '<div class="generate-questions-section">' +
+                    '<h3>Generate Questions with AI</h3>' +
+                    '<div class="ai-info">' +
+                    '<p><i class="fas fa-robot"></i> Use AI to automatically generate quiz questions for this category.</p>' +
+                    '</div>' +
+                    '<a href="generate-ai-question/?category_id=' + categoryId + '" class="button">' +
+                    '<i class="fas fa-magic"></i> Generate AI Questions' +
+                    '</a>' +
+                    '</div>';
+                
+                $('.submit-row').before(statsHtml + aiHtml);
+            }
+        }
+    })(django.jQuery);
+</script>
+{% endblock %}

@@ -1,0 +1,137 @@
+{% extends "admin/change_form.html" %}
+{% load i18n admin_urls static %}
+
+{% block extrastyle %}{{ block.super }}
+<style>
+    .option-field {
+        position: relative;
+        padding: 15px;
+        margin-bottom: 15px;
+        border: 1px solid #e9ecef;
+        border-radius: 5px;
+        background-color: #f8f9fa;
+    }
+    
+    .option-field.correct {
+        border-color: #198754;
+        background-color: #d1e7dd;
+    }
+    
+    .option-field .correct-badge {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        background-color: #198754;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+    
+    .option-preview {
+        margin-top: 20px;
+        padding: 20px;
+        border: 1px solid #e9ecef;
+        border-radius: 5px;
+        background-color: white;
+    }
+    
+    .option-preview h3 {
+        margin-top: 0;
+        color: #0d6efd;
+        font-size: 18px;
+        font-weight: 600;
+    }
+    
+    .option-preview .question-text {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 15px;
+    }
+    
+    .option-preview .option {
+        padding: 8px 15px;
+        margin-bottom: 8px;
+        background-color: #f8f9fa;
+        border-radius: 5px;
+        border: 1px solid #dee2e6;
+    }
+    
+    .option-preview .option.correct {
+        background-color: #d1e7dd;
+        border-color: #198754;
+    }
+    
+    .option-preview .option.correct::before {
+        content: '✓';
+        color: #198754;
+        font-weight: bold;
+        margin-right: 5px;
+    }
+</style>
+{% endblock %}
+
+{% block admin_change_form_document_ready %}{{ block.super }}
+<script>
+    (function($) {
+        // Function to update the preview
+        function updatePreview() {
+            var questionText = $('#id_text').val() || 'Question text will appear here';
+            var option1 = $('#id_option1').val() || 'Option 1';
+            var option2 = $('#id_option2').val() || 'Option 2';
+            var option3 = $('#id_option3').val() || 'Option 3';
+            var option4 = $('#id_option4').val() || 'Option 4';
+            var correctOption = $('input[name="correct_option"]:checked').val();
+            
+            // Update the question text
+            $('.preview-question-text').text(questionText);
+            
+            // Update the options
+            $('.preview-option1').text(option1).removeClass('correct');
+            $('.preview-option2').text(option2).removeClass('correct');
+            $('.preview-option3').text(option3).removeClass('correct');
+            $('.preview-option4').text(option4).removeClass('correct');
+            
+            // Mark the correct option
+            if (correctOption) {
+                $('.preview-option' + correctOption).addClass('correct');
+            }
+            
+            // Update the option fields
+            $('.option-field').removeClass('correct');
+            $('.option-field .correct-badge').remove();
+            
+            if (correctOption) {
+                $('.option-field-' + correctOption).addClass('correct')
+                    .append('<span class="correct-badge">Correct Answer</span>');
+            }
+        }
+        
+        // Add the preview section
+        var previewHtml = '<div class="option-preview">' +
+            '<h3>Question Preview</h3>' +
+            '<div class="question-text preview-question-text">Question text will appear here</div>' +
+            '<div class="option preview-option1">Option 1</div>' +
+            '<div class="option preview-option2">Option 2</div>' +
+            '<div class="option preview-option3">Option 3</div>' +
+            '<div class="option preview-option4">Option 4</div>' +
+            '</div>';
+        
+        $('.field-text').after(previewHtml);
+        
+        // Wrap each option field
+        $('#id_option1').closest('.form-row').addClass('option-field option-field-1');
+        $('#id_option2').closest('.form-row').addClass('option-field option-field-2');
+        $('#id_option3').closest('.form-row').addClass('option-field option-field-3');
+        $('#id_option4').closest('.form-row').addClass('option-field option-field-4');
+        
+        // Add event listeners
+        $('#id_text, #id_option1, #id_option2, #id_option3, #id_option4').on('input', updatePreview);
+        $('input[name="correct_option"]').on('change', updatePreview);
+        
+        // Initial update
+        updatePreview();
+    })(django.jQuery);
+</script>
+{% endblock %}

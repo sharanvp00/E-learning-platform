@@ -1,0 +1,438 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Python Study Guide - Edukate{% endblock %}
+
+{% block extra_css %}
+<style>
+    .study-guide-container {
+        padding: 40px 0;
+        background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+        min-height: 100vh;
+    }
+    
+    .guide-content {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        margin-bottom: 30px;
+    }
+    
+    .guide-title {
+        color: #0d6efd;
+        font-weight: 700;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid #e9ecef;
+    }
+    
+    .section-title {
+        color: #0d6efd;
+        font-weight: 600;
+        margin-top: 30px;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #e9ecef;
+    }
+    
+    .subsection-title {
+        color: #495057;
+        font-weight: 600;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+    
+    .code-block {
+        background-color: #f8f9fa;
+        border-left: 4px solid #0d6efd;
+        padding: 15px;
+        margin: 15px 0;
+        border-radius: 0 5px 5px 0;
+        font-family: monospace;
+        white-space: pre;
+        overflow-x: auto;
+    }
+    
+    .question-card {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 15px;
+        border-left: 4px solid #0d6efd;
+    }
+    
+    .question-text {
+        font-weight: 600;
+        margin-bottom: 15px;
+    }
+    
+    .option {
+        padding: 8px 15px;
+        margin-bottom: 8px;
+        background-color: white;
+        border-radius: 5px;
+        border: 1px solid #dee2e6;
+    }
+    
+    .option.correct {
+        background-color: #d4edda;
+        border-color: #c3e6cb;
+        color: #155724;
+    }
+    
+    .guide-nav {
+        position: sticky;
+        top: 20px;
+    }
+    
+    .nav-link {
+        color: #495057;
+        padding: 8px 15px;
+        border-radius: 5px;
+        margin-bottom: 5px;
+    }
+    
+    .nav-link:hover, .nav-link.active {
+        background-color: #e9ecef;
+        color: #0d6efd;
+    }
+    
+    .download-btn {
+        margin-top: 20px;
+        background-color: #198754;
+        color: white;
+        border-radius: 5px;
+        padding: 10px 20px;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.3s ease;
+    }
+    
+    .download-btn:hover {
+        background-color: #157347;
+        color: white;
+    }
+    
+    .bullet-list {
+        list-style-type: disc;
+        padding-left: 20px;
+        margin-bottom: 15px;
+    }
+    
+    .bullet-list li {
+        margin-bottom: 5px;
+    }
+    
+    @media (max-width: 768px) {
+        .guide-nav {
+            position: relative;
+            margin-bottom: 30px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="study-guide-container">
+    <div class="container">
+        <div class="row">
+            <!-- Sidebar Navigation -->
+            <div class="col-lg-3">
+                <div class="guide-nav">
+                    <h5 class="mb-3">Table of Contents</h5>
+                    <div class="nav flex-column">
+                        <a class="nav-link" href="#introduction">1. Introduction to Python</a>
+                        <a class="nav-link" href="#fundamentals">2. Python Fundamentals</a>
+                        <a class="nav-link" href="#data-structures">3. Data Structures</a>
+                        <a class="nav-link" href="#control-flow">4. Control Flow</a>
+                        <a class="nav-link" href="#functions">5. Functions and Modules</a>
+                        <a class="nav-link" href="#oop">6. Object-Oriented Programming</a>
+                        <a class="nav-link" href="#practice">7. Practice Questions</a>
+                    </div>
+                    <a href="{% url 'download_python_content' %}" class="download-btn">
+                        <i class="fas fa-download me-2"></i>Download Guide
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="col-lg-9">
+                <div class="guide-content">
+                    <h1 class="guide-title">Python Programming Study Guide</h1>
+                    
+                    <p class="lead">
+                        This comprehensive study guide is designed to help you master Python programming
+                        from fundamentals to advanced concepts. Use this guide alongside your course
+                        materials to enhance your learning experience.
+                    </p>
+                    
+                    <!-- Section 1: Introduction -->
+                    <h2 id="introduction" class="section-title">1. Introduction to Python</h2>
+                    
+                    <h3 class="subsection-title">What is Python?</h3>
+                    <p>
+                        Python is a high-level, interpreted programming language created by Guido van Rossum
+                        and first released in 1991. It emphasizes code readability with its notable use of
+                        significant whitespace. Python features a dynamic type system and automatic memory
+                        management and supports multiple programming paradigms.
+                    </p>
+                    
+                    <h3 class="subsection-title">Why Learn Python?</h3>
+                    <ul class="bullet-list">
+                        <li><strong>Readability and simplicity</strong> - Clean syntax that's easy to learn</li>
+                        <li><strong>Versatility</strong> - Used in web development, data science, AI, automation, and more</li>
+                        <li><strong>Large standard library</strong> - "Batteries included" philosophy</li>
+                        <li><strong>Strong community support</strong> - Extensive documentation and resources</li>
+                        <li><strong>High demand in job market</strong> - One of the most sought-after programming skills</li>
+                    </ul>
+                    
+                    <h3 class="subsection-title">Python Versions</h3>
+                    <ul class="bullet-list">
+                        <li><strong>Python 2.x</strong> - Legacy version (officially discontinued as of January 2020)</li>
+                        <li><strong>Python 3.x</strong> - Current version with ongoing development and improvements</li>
+                        <li>This guide focuses on Python 3.x</li>
+                    </ul>
+                    
+                    <!-- Section 2: Python Fundamentals -->
+                    <h2 id="fundamentals" class="section-title">2. Python Fundamentals</h2>
+                    
+                    <h3 class="subsection-title">Getting Started</h3>
+                    <ul class="bullet-list">
+                        <li><strong>Installing Python:</strong> Download from python.org or use package managers</li>
+                        <li><strong>Python Interpreter:</strong> Interactive mode using 'python' or 'python3' command</li>
+                        <li><strong>IDEs and Code Editors:</strong> PyCharm, VS Code, Jupyter Notebooks</li>
+                    </ul>
+                    
+                    <h3 class="subsection-title">Basic Syntax</h3>
+                    <ul class="bullet-list">
+                        <li><strong>Indentation:</strong> Python uses indentation (typically 4 spaces) to define code blocks</li>
+                        <li><strong>Comments:</strong> Use # for single-line comments and triple quotes for multi-line comments</li>
+                        <li><strong>Line Continuation:</strong> Use \ for line continuation or implicit continuation within brackets</li>
+                    </ul>
+                    
+                    <h3 class="subsection-title">Variables and Data Types</h3>
+                    <p>
+                        <strong>Variables:</strong> Names that store values (no explicit declaration needed)<br>
+                        <strong>Naming Rules:</strong> Start with letter/underscore, case-sensitive, no reserved words
+                    </p>
+                    
+                    <p><strong>Basic Data Types:</strong></p>
+                    <ul class="bullet-list">
+                        <li><strong>Integers (int):</strong> Whole numbers like 5, -3, 0</li>
+                        <li><strong>Floating-point (float):</strong> Decimal numbers like 3.14, -0.001</li>
+                        <li><strong>Strings (str):</strong> Text enclosed in quotes - 'hello', "world"</li>
+                        <li><strong>Booleans (bool):</strong> True or False values</li>
+                        <li><strong>None:</strong> Represents absence of value</li>
+                    </ul>
+                    
+                    <p><strong>Type Conversion:</strong> int(), float(), str(), bool() - Convert between types</p>
+                    
+                    <h3 class="subsection-title">Basic Operations</h3>
+                    <p><strong>Arithmetic Operators:</strong></p>
+                    <ul class="bullet-list">
+                        <li><strong>Addition (+):</strong> 5 + 3 = 8</li>
+                        <li><strong>Subtraction (-):</strong> 5 - 3 = 2</li>
+                        <li><strong>Multiplication (*):</strong> 5 * 3 = 15</li>
+                        <li><strong>Division (/):</strong> 5 / 3 = 1.6666...</li>
+                        <li><strong>Floor Division (//):</strong> 5 // 3 = 1</li>
+                        <li><strong>Modulus (%):</strong> 5 % 3 = 2</li>
+                        <li><strong>Exponentiation (**):</strong> 5 ** 3 = 125</li>
+                    </ul>
+                    
+                    <!-- Section 3: Data Structures -->
+                    <h2 id="data-structures" class="section-title">3. Data Structures</h2>
+                    
+                    <h3 class="subsection-title">Lists</h3>
+                    <p>
+                        Ordered, mutable collections of items created with square brackets.
+                    </p>
+                    <div class="code-block">
+my_list = [1, 2, 3, 'hello']
+print(my_list[0])  # Output: 1
+print(my_list[-1])  # Output: 'hello'
+print(my_list[1:3])  # Output: [2, 3]</div>
+                    
+                    <p><strong>Common List Methods:</strong></p>
+                    <ul class="bullet-list">
+                        <li>append(), extend(), insert()</li>
+                        <li>remove(), pop(), clear()</li>
+                        <li>index(), count(), sort(), reverse()</li>
+                    </ul>
+                    
+                    <h3 class="subsection-title">Tuples</h3>
+                    <p>
+                        Ordered, immutable collections of items created with parentheses.
+                    </p>
+                    <div class="code-block">
+my_tuple = (1, 2, 3, 'hello')
+print(my_tuple[0])  # Output: 1</div>
+                    
+                    <h3 class="subsection-title">Dictionaries</h3>
+                    <p>
+                        Unordered collections of key-value pairs created with curly braces.
+                    </p>
+                    <div class="code-block">
+my_dict = {'name': 'John', 'age': 30}
+print(my_dict['name'])  # Output: 'John'</div>
+                    
+                    <!-- Section 4: Control Flow -->
+                    <h2 id="control-flow" class="section-title">4. Control Flow</h2>
+                    
+                    <h3 class="subsection-title">Conditional Statements</h3>
+                    <div class="code-block">
+if condition1:
+    # code block executed if condition1 is True
+elif condition2:
+    # code block executed if condition1 is False and condition2 is True
+else:
+    # code block executed if all conditions are False</div>
+                    
+                    <h3 class="subsection-title">Loops</h3>
+                    <p><strong>For Loops:</strong></p>
+                    <div class="code-block">
+for item in iterable:
+    # code block executed for each item</div>
+                    
+                    <p><strong>While Loops:</strong></p>
+                    <div class="code-block">
+while condition:
+    # code block executed while condition is True</div>
+                    
+                    <!-- Section 5: Functions and Modules -->
+                    <h2 id="functions" class="section-title">5. Functions and Modules</h2>
+                    
+                    <h3 class="subsection-title">Defining Functions</h3>
+                    <div class="code-block">
+def function_name(parameters):
+    """Docstring describing the function"""
+    # Function body
+    return value  # Optional return statement</div>
+                    
+                    <h3 class="subsection-title">Parameters and Arguments</h3>
+                    <ul class="bullet-list">
+                        <li><strong>Positional arguments:</strong> Matched by position</li>
+                        <li><strong>Keyword arguments:</strong> Matched by parameter name</li>
+                        <li><strong>Default parameters:</strong> Specify default values</li>
+                        <li><strong>*args:</strong> Variable number of positional arguments (as tuple)</li>
+                        <li><strong>**kwargs:</strong> Variable number of keyword arguments (as dictionary)</li>
+                    </ul>
+                    
+                    <!-- Section 6: Object-Oriented Programming -->
+                    <h2 id="oop" class="section-title">6. Object-Oriented Programming</h2>
+                    
+                    <h3 class="subsection-title">Classes and Objects</h3>
+                    <ul class="bullet-list">
+                        <li><strong>Class:</strong> Blueprint for creating objects</li>
+                        <li><strong>Object:</strong> Instance of a class</li>
+                        <li><strong>Attributes:</strong> Variables that belong to a class/object</li>
+                        <li><strong>Methods:</strong> Functions that belong to a class/object</li>
+                    </ul>
+                    
+                    <div class="code-block">
+class ClassName:
+    # Class attribute
+    class_attribute = value
+    
+    # Constructor method
+    def __init__(self, parameters):
+        # Instance attributes
+        self.attribute = value
+    
+    # Instance method
+    def method_name(self, parameters):
+        # Method body
+        return value</div>
+                    
+                    <h3 class="subsection-title">Inheritance</h3>
+                    <p>
+                        Mechanism for creating a new class that is a modified version of an existing class.
+                    </p>
+                    <div class="code-block">
+class ChildClass(ParentClass):
+    def __init__(self, parameters):
+        super().__init__(parameters)  # Call parent constructor
+        # Child-specific initialization</div>
+                    
+                    <!-- Section 7: Practice Questions -->
+                    <h2 id="practice" class="section-title">7. Practice Questions</h2>
+                    
+                    {% for question in questions %}
+                    <div class="question-card">
+                        <p class="question-text">Question {{ forloop.counter }}: {{ question.text }}</p>
+                        <div class="option {% if question.correct_option == 1 %}correct{% endif %}">
+                            A) {{ question.option1 }}
+                            {% if question.correct_option == 1 %}<span class="ms-2 badge bg-success">Correct Answer</span>{% endif %}
+                        </div>
+                        <div class="option {% if question.correct_option == 2 %}correct{% endif %}">
+                            B) {{ question.option2 }}
+                            {% if question.correct_option == 2 %}<span class="ms-2 badge bg-success">Correct Answer</span>{% endif %}
+                        </div>
+                        <div class="option {% if question.correct_option == 3 %}correct{% endif %}">
+                            C) {{ question.option3 }}
+                            {% if question.correct_option == 3 %}<span class="ms-2 badge bg-success">Correct Answer</span>{% endif %}
+                        </div>
+                        <div class="option {% if question.correct_option == 4 %}correct{% endif %}">
+                            D) {{ question.option4 }}
+                            {% if question.correct_option == 4 %}<span class="ms-2 badge bg-success">Correct Answer</span>{% endif %}
+                        </div>
+                    </div>
+                    {% empty %}
+                    <p>No practice questions available at this time.</p>
+                    {% endfor %}
+                    
+                    <!-- Conclusion -->
+                    <div class="mt-5 p-4 bg-light rounded">
+                        <h3>Conclusion</h3>
+                        <p>
+                            Congratulations on reviewing this Python study guide! Remember that
+                            programming is a skill that improves with practice. Continue building
+                            projects, solving problems, and exploring new concepts to enhance your
+                            Python programming abilities.
+                        </p>
+                        <p class="mb-0">Happy coding!</p>
+                    </div>
+                    
+                    <div class="text-center mt-4">
+                        <a href="{% url 'download_python_content' %}" class="btn btn-success">
+                            <i class="fas fa-download me-2"></i>Download Full Study Guide
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    $(document).ready(function() {
+        // Smooth scrolling for navigation links
+        $('.nav-link').on('click', function(event) {
+            if (this.hash !== '') {
+                event.preventDefault();
+                var hash = this.hash;
+                $('html, body').animate({
+                    scrollTop: $(hash).offset().top - 70
+                }, 800);
+            }
+        });
+        
+        // Highlight active section in navigation
+        $(window).scroll(function() {
+            var scrollPosition = $(window).scrollTop();
+            
+            $('.section-title').each(function() {
+                var currentSection = $(this);
+                var sectionTop = currentSection.offset().top - 100;
+                
+                if (scrollPosition >= sectionTop) {
+                    $('.nav-link').removeClass('active');
+                    $('.nav-link[href="#' + currentSection.attr('id') + '"]').addClass('active');
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

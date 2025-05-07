@@ -1,0 +1,52 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_urls static %}
+
+{% block extrahead %}{{ block.super }}
+<script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
+{{ media }}
+{% endblock %}
+
+{% block extrastyle %}{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{% static "admin/css/forms.css" %}">
+{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+    &rsaquo; <a href="{% url 'admin:app_list' app_label=opts.app_label %}">{{ opts.app_config.verbose_name }}</a>
+    &rsaquo; <a href="{% url 'admin:certificate_certificate_changelist' %}">Certificates</a>
+    &rsaquo; Bulk Generate Certificates
+</div>
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+    <div class="module">
+        <h2>Bulk Generate Certificates</h2>
+        <div class="form-row">
+            <p>
+                This tool allows you to generate certificates in bulk for all users who have passed a specific quiz category.
+                Select a category below to generate certificates for all eligible users.
+            </p>
+        </div>
+        
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-row">
+                <label for="id_category">Category:</label>
+                <select name="category" id="id_category" required>
+                    <option value="">---------</option>
+                    {% for category in categories %}
+                    <option value="{{ category.id }}">{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="submit-row">
+                <input type="submit" value="Generate Certificates" class="default">
+                <a href="{% url 'admin:certificate_certificate_changelist' %}" class="button">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

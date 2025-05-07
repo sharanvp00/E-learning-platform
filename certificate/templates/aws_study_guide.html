@@ -1,0 +1,666 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}AWS Cloud Computing Study Guide - Edukate{% endblock %}
+
+{% block extra_css %}
+<style>
+    .study-guide-container {
+        padding: 40px 0;
+        background: linear-gradient(135deg, #232f3e 0%, #3a4b5c 100%);
+        min-height: 100vh;
+        color: #f8f9fa;
+    }
+    
+    .guide-content {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        padding: 30px;
+        margin-bottom: 30px;
+        color: #333;
+    }
+    
+    .guide-title {
+        color: #ff9900;
+        font-weight: 700;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid #e9ecef;
+    }
+    
+    .section-title {
+        color: #232f3e;
+        font-weight: 600;
+        margin-top: 30px;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #e9ecef;
+    }
+    
+    .subsection-title {
+        color: #495057;
+        font-weight: 600;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+    
+    .code-block {
+        background-color: #f8f9fa;
+        border-left: 4px solid #ff9900;
+        padding: 15px;
+        margin: 15px 0;
+        border-radius: 0 5px 5px 0;
+        font-family: monospace;
+        white-space: pre;
+        overflow-x: auto;
+    }
+    
+    .question-card {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 15px;
+        border-left: 4px solid #ff9900;
+    }
+    
+    .question-text {
+        font-weight: 600;
+        margin-bottom: 15px;
+    }
+    
+    .option {
+        padding: 8px 15px;
+        margin-bottom: 8px;
+        background-color: white;
+        border-radius: 5px;
+        border: 1px solid #dee2e6;
+    }
+    
+    .option.correct {
+        background-color: #d4edda;
+        border-color: #c3e6cb;
+        color: #155724;
+    }
+    
+    .guide-nav {
+        position: sticky;
+        top: 20px;
+        background-color: #232f3e;
+        border-radius: 10px;
+        padding: 20px;
+    }
+    
+    .nav-link {
+        color: #f8f9fa;
+        padding: 8px 15px;
+        border-radius: 5px;
+        margin-bottom: 5px;
+    }
+    
+    .nav-link:hover, .nav-link.active {
+        background-color: #3a4b5c;
+        color: #ff9900;
+    }
+    
+    .download-btn {
+        margin-top: 20px;
+        background-color: #ff9900;
+        color: #232f3e;
+        border-radius: 5px;
+        padding: 10px 20px;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.3s ease;
+        font-weight: 600;
+    }
+    
+    .download-btn:hover {
+        background-color: #ec7211;
+        color: #232f3e;
+    }
+    
+    .bullet-list {
+        list-style-type: disc;
+        padding-left: 20px;
+        margin-bottom: 15px;
+    }
+    
+    .bullet-list li {
+        margin-bottom: 5px;
+    }
+    
+    .aws-icon {
+        color: #ff9900;
+        margin-right: 8px;
+    }
+    
+    .service-card {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 15px;
+        border: 1px solid #dee2e6;
+        transition: all 0.3s ease;
+    }
+    
+    .service-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .service-title {
+        color: #232f3e;
+        font-weight: 600;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+    }
+    
+    @media (max-width: 768px) {
+        .guide-nav {
+            position: relative;
+            margin-bottom: 30px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="study-guide-container">
+    <div class="container">
+        <div class="row">
+            <!-- Sidebar Navigation -->
+            <div class="col-lg-3">
+                <div class="guide-nav">
+                    <h5 class="mb-3 text-white">Table of Contents</h5>
+                    <div class="nav flex-column">
+                        <a class="nav-link" href="#introduction">1. Introduction to AWS</a>
+                        <a class="nav-link" href="#infrastructure">2. AWS Global Infrastructure</a>
+                        <a class="nav-link" href="#core-services">3. Core AWS Services</a>
+                        <a class="nav-link" href="#compute">4. Compute Services</a>
+                        <a class="nav-link" href="#storage">5. Storage Services</a>
+                        <a class="nav-link" href="#database">6. Database Services</a>
+                        <a class="nav-link" href="#networking">7. Networking & Content Delivery</a>
+                        <a class="nav-link" href="#security">8. Security & Compliance</a>
+                        <a class="nav-link" href="#practice">9. Practice Questions</a>
+                    </div>
+                    <a href="{% url 'download_aws_content' %}" class="download-btn">
+                        <i class="fas fa-download me-2"></i>Download Guide
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="col-lg-9">
+                <div class="guide-content">
+                    <h1 class="guide-title">AWS Cloud Computing Study Guide</h1>
+                    
+                    <p class="lead">
+                        This comprehensive study guide is designed to help you master AWS Cloud Computing
+                        from fundamentals to advanced services. Use this guide alongside your course
+                        materials to enhance your learning experience.
+                    </p>
+                    
+                    <!-- Section 1: Introduction -->
+                    <h2 id="introduction" class="section-title">1. Introduction to AWS</h2>
+                    
+                    <h3 class="subsection-title">What is AWS?</h3>
+                    <p>
+                        Amazon Web Services (AWS) is a comprehensive cloud computing platform provided by
+                        Amazon. It offers a mixture of infrastructure as a service (IaaS), platform as a
+                        service (PaaS), and packaged software as a service (SaaS) offerings.
+                    </p>
+                    
+                    <h3 class="subsection-title">Why Use AWS?</h3>
+                    <ul class="bullet-list">
+                        <li><strong>Flexibility</strong> - Only use what you need, scale up or down as required</li>
+                        <li><strong>Cost-Effective</strong> - Pay only for what you use, no upfront hardware costs</li>
+                        <li><strong>Scalability</strong> - Easily scale resources up or down based on demand</li>
+                        <li><strong>Security</strong> - Comprehensive security capabilities and features</li>
+                        <li><strong>Global Reach</strong> - Deploy applications worldwide in minutes</li>
+                    </ul>
+                    
+                    <h3 class="subsection-title">AWS Account Structure</h3>
+                    <ul class="bullet-list">
+                        <li><strong>Root Account</strong> - The initial account created when first setting up AWS</li>
+                        <li><strong>IAM Users</strong> - Individual users created within the account</li>
+                        <li><strong>Organizations</strong> - Manage multiple AWS accounts as a single unit</li>
+                        <li><strong>Consolidated Billing</strong> - Single payment method for all accounts</li>
+                    </ul>
+                    
+                    <!-- Section 2: AWS Global Infrastructure -->
+                    <h2 id="infrastructure" class="section-title">2. AWS Global Infrastructure</h2>
+                    
+                    <div class="row">
+                        <div class="col-md-4 mb-4">
+                            <div class="service-card">
+                                <h4 class="service-title">
+                                    <i class="fas fa-globe aws-icon"></i>
+                                    Regions
+                                </h4>
+                                <ul class="bullet-list mb-0">
+                                    <li>Geographical areas with multiple Availability Zones</li>
+                                    <li>Each region is completely independent</li>
+                                    <li>Not all services are available in all regions</li>
+                                    <li>Data does not automatically replicate across regions</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4 mb-4">
+                            <div class="service-card">
+                                <h4 class="service-title">
+                                    <i class="fas fa-server aws-icon"></i>
+                                    Availability Zones
+                                </h4>
+                                <ul class="bullet-list mb-0">
+                                    <li>Physically separate data centers within a region</li>
+                                    <li>Connected with high-bandwidth, low-latency networking</li>
+                                    <li>Designed for fault isolation</li>
+                                    <li>Applications should use multiple AZs for high availability</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4 mb-4">
+                            <div class="service-card">
+                                <h4 class="service-title">
+                                    <i class="fas fa-map-marker-alt aws-icon"></i>
+                                    Edge Locations
+                                </h4>
+                                <ul class="bullet-list mb-0">
+                                    <li>Content Delivery Network (CloudFront) endpoints</li>
+                                    <li>More numerous than regions or AZs</li>
+                                    <li>Used to cache content closer to users</li>
+                                    <li>Also used for Route 53 (DNS) and AWS Shield</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Section 3: Core AWS Services -->
+                    <h2 id="core-services" class="section-title">3. Core AWS Services</h2>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="service-card">
+                                <h4 class="service-title">
+                                    <i class="fas fa-users-cog aws-icon"></i>
+                                    Identity and Access Management (IAM)
+                                </h4>
+                                <p>
+                                    IAM enables you to manage access to AWS services and resources securely.
+                                    You can create and manage AWS users and groups, and use permissions to
+                                    allow and deny their access to AWS resources.
+                                </p>
+                                <ul class="bullet-list mb-0">
+                                    <li>Users, Groups, Roles, and Policies</li>
+                                    <li>Multi-Factor Authentication (MFA)</li>
+                                    <li>Temporary security credentials</li>
+                                    <li>Identity federation</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-4">
+                            <div class="service-card">
+                                <h4 class="service-title">
+                                    <i class="fas fa-network-wired aws-icon"></i>
+                                    Virtual Private Cloud (VPC)
+                                </h4>
+                                <p>
+                                    Amazon VPC lets you provision a logically isolated section of the AWS Cloud
+                                    where you can launch AWS resources in a virtual network that you define.
+                                </p>
+                                <ul class="bullet-list mb-0">
+                                    <li>Complete control over virtual networking environment</li>
+                                    <li>Subnets, Route Tables, Internet Gateways</li>
+                                    <li>Security Groups and Network ACLs</li>
+                                    <li>VPN and Direct Connect</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Section 4: Compute Services -->
+                    <h2 id="compute" class="section-title">4. Compute Services</h2>
+                    
+                    <div class="row">
+                        <div class="col-md-4 mb-4">
+                            <div class="service-card">
+                                <h4 class="service-title">
+                                    <i class="fas fa-server aws-icon"></i>
+                                    EC2 (Elastic Compute Cloud)
+                                </h4>
+                                <p>
+                                    Virtual servers in the cloud that provide resizable compute capacity.
+                                </p>
+                                <ul class="bullet-list mb-0">
+                                    <li>Various instance types for different use cases</li>
+                                    <li>Multiple pricing options (On-Demand, Reserved, Spot)</li>
+                                    <li>Auto Scaling to adjust capacity</li>
+                                    <li>Load Balancing to distribute traffic</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4 mb-4">
+                            <div class="service-card">
+                                <h4 class="service-title">
+                                    <i class="fas fa-code aws-icon"></i>
+                                    Lambda
+                                </h4>
+                                <p>
+                                    Run code without provisioning or managing servers.
+                                </p>
+                                <ul class="bullet-list mb-0">
+                                    <li>Serverless compute service</li>
+                                    <li>Pay only for compute time consumed</li>
+                                    <li>Automatically scales applications</li>
+                                    <li>Supports multiple programming languages</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4 mb-4">
+                            <div class="service-card">
+                                <h4 class="service-title">
+                                    <i class="fas fa-leaf aws-icon"></i>
+                                    Elastic Beanstalk
+                                </h4>
+                                <p>
+                                    Easy-to-use service for deploying and scaling web applications.
+                                </p>
+                                <ul class="bullet-list mb-0">
+                                    <li>Platform as a Service (PaaS)</li>
+                                    <li>Automatic capacity provisioning</li>
+                                    <li>Load balancing and auto-scaling</li>
+                                    <li>Supports various platforms (Java, .NET, PHP, etc.)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Section 5: Storage Services -->
+                    <h2 id="storage" class="section-title">5. Storage Services</h2>
+                    
+                    <div class="row">
+                        <div class="col-md-4 mb-4">
+                            <div class="service-card">
+                                <h4 class="service-title">
+                                    <i class="fas fa-database aws-icon"></i>
+                                    S3 (Simple Storage Service)
+                                </h4>
+                                <p>
+                                    Object storage service that offers industry-leading scalability, data availability, security, and performance.
+                                </p>
+                                <ul class="bullet-list mb-0">
+                                    <li>Virtually unlimited storage capacity</li>
+                                    <li>Different storage classes for different use cases</li>
+                                    <li>Versioning, encryption, and access control</li>
+                                    <li>99.999999999% durability</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4 mb-4">
+                            <div class="service-card">
+                                <h4 class="service-title">
+                                    <i class="fas fa-hdd aws-icon"></i>
+                                    EBS (Elastic Block Store)
+                                </h4>
+                                <p>
+                                    Persistent block storage volumes for use with EC2 instances.
+                                </p>
+                                <ul class="bullet-list mb-0">
+                                    <li>Independent lifecycle from EC2 instances</li>
+                                    <li>Different volume types for different performance needs</li>
+                                    <li>Point-in-time snapshots</li>
+                                    <li>Encryption available</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4 mb-4">
+                            <div class="service-card">
+                                <h4 class="service-title">
+                                    <i class="fas fa-archive aws-icon"></i>
+                                    Glacier
+                                </h4>
+                                <p>
+                                    Low-cost storage service for data archiving and long-term backup.
+                                </p>
+                                <ul class="bullet-list mb-0">
+                                    <li>Designed for infrequently accessed data</li>
+                                    <li>Various retrieval options (minutes to hours)</li>
+                                    <li>Highly durable storage</li>
+                                    <li>Significantly lower cost than S3</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Section 6: Database Services -->
+                    <h2 id="database" class="section-title">6. Database Services</h2>
+                    
+                    <div class="row">
+                        <div class="col-md-4 mb-4">
+                            <div class="service-card">
+                                <h4 class="service-title">
+                                    <i class="fas fa-table aws-icon"></i>
+                                    RDS (Relational Database Service)
+                                </h4>
+                                <p>
+                                    Managed relational database service that makes it easy to set up, operate, and scale a relational database.
+                                </p>
+                                <ul class="bullet-list mb-0">
+                                    <li>Supports multiple database engines</li>
+                                    <li>Automated backups and patching</li>
+                                    <li>Multi-AZ deployments for high availability</li>
+                                    <li>Read replicas for improved performance</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4 mb-4">
+                            <div class="service-card">
+                                <h4 class="service-title">
+                                    <i class="fas fa-bolt aws-icon"></i>
+                                    DynamoDB
+                                </h4>
+                                <p>
+                                    Fast and flexible NoSQL database service for any scale.
+                                </p>
+                                <ul class="bullet-list mb-0">
+                                    <li>Fully managed NoSQL database</li>
+                                    <li>Single-digit millisecond performance</li>
+                                    <li>Automatic scaling of throughput capacity</li>
+                                    <li>Built-in security and backup/restore</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4 mb-4">
+                            <div class="service-card">
+                                <h4 class="service-title">
+                                    <i class="fas fa-warehouse aws-icon"></i>
+                                    Redshift
+                                </h4>
+                                <p>
+                                    Fast, fully managed data warehouse that makes it simple and cost-effective to analyze data.
+                                </p>
+                                <ul class="bullet-list mb-0">
+                                    <li>Petabyte-scale data warehouse service</li>
+                                    <li>Columnar storage technology</li>
+                                    <li>Massively parallel processing (MPP)</li>
+                                    <li>SQL interface for analytics</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Section 7: Networking & Content Delivery -->
+                    <h2 id="networking" class="section-title">7. Networking & Content Delivery</h2>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="service-card">
+                                <h4 class="service-title">
+                                    <i class="fas fa-globe aws-icon"></i>
+                                    Route 53
+                                </h4>
+                                <p>
+                                    Highly available and scalable cloud Domain Name System (DNS) web service.
+                                </p>
+                                <ul class="bullet-list mb-0">
+                                    <li>Domain registration</li>
+                                    <li>DNS routing policies</li>
+                                    <li>Health checking and monitoring</li>
+                                    <li>Traffic flow and latency-based routing</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-4">
+                            <div class="service-card">
+                                <h4 class="service-title">
+                                    <i class="fas fa-cloud aws-icon"></i>
+                                    CloudFront
+                                </h4>
+                                <p>
+                                    Fast content delivery network (CDN) service that securely delivers data, videos, applications, and APIs.
+                                </p>
+                                <ul class="bullet-list mb-0">
+                                    <li>Global network of edge locations</li>
+                                    <li>Low latency and high transfer speeds</li>
+                                    <li>Integration with AWS Shield for DDoS protection</li>
+                                    <li>Customizable content delivery</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Section 8: Security & Compliance -->
+                    <h2 id="security" class="section-title">8. Security & Compliance</h2>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="service-card">
+                                <h4 class="service-title">
+                                    <i class="fas fa-shield-alt aws-icon"></i>
+                                    AWS Shield
+                                </h4>
+                                <p>
+                                    Managed Distributed Denial of Service (DDoS) protection service.
+                                </p>
+                                <ul class="bullet-list mb-0">
+                                    <li>Always-on detection and automatic mitigations</li>
+                                    <li>Protects against most common DDoS attacks</li>
+                                    <li>No additional charge for AWS Shield Standard</li>
+                                    <li>AWS Shield Advanced for enhanced protection</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-4">
+                            <div class="service-card">
+                                <h4 class="service-title">
+                                    <i class="fas fa-lock aws-icon"></i>
+                                    AWS WAF
+                                </h4>
+                                <p>
+                                    Web Application Firewall that helps protect web applications from common web exploits.
+                                </p>
+                                <ul class="bullet-list mb-0">
+                                    <li>Protects against SQL injection and XSS</li>
+                                    <li>Create custom rules to block common attack patterns</li>
+                                    <li>Real-time metrics and sampled web requests</li>
+                                    <li>Integration with CloudFront and Application Load Balancer</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Section 9: Practice Questions -->
+                    <h2 id="practice" class="section-title">9. Practice Questions</h2>
+                    
+                    {% for question in questions %}
+                    <div class="question-card">
+                        <p class="question-text">Question {{ forloop.counter }}: {{ question.text }}</p>
+                        <div class="option {% if question.correct_option == 1 %}correct{% endif %}">
+                            A) {{ question.option1 }}
+                            {% if question.correct_option == 1 %}<span class="ms-2 badge bg-success">Correct Answer</span>{% endif %}
+                        </div>
+                        <div class="option {% if question.correct_option == 2 %}correct{% endif %}">
+                            B) {{ question.option2 }}
+                            {% if question.correct_option == 2 %}<span class="ms-2 badge bg-success">Correct Answer</span>{% endif %}
+                        </div>
+                        <div class="option {% if question.correct_option == 3 %}correct{% endif %}">
+                            C) {{ question.option3 }}
+                            {% if question.correct_option == 3 %}<span class="ms-2 badge bg-success">Correct Answer</span>{% endif %}
+                        </div>
+                        <div class="option {% if question.correct_option == 4 %}correct{% endif %}">
+                            D) {{ question.option4 }}
+                            {% if question.correct_option == 4 %}<span class="ms-2 badge bg-success">Correct Answer</span>{% endif %}
+                        </div>
+                    </div>
+                    {% empty %}
+                    <p>No practice questions available at this time.</p>
+                    {% endfor %}
+                    
+                    <!-- Conclusion -->
+                    <div class="mt-5 p-4 bg-light rounded">
+                        <h3>Conclusion</h3>
+                        <p>
+                            Congratulations on reviewing this AWS Cloud Computing study guide! Continue exploring 
+                            AWS services and practicing with hands-on labs to enhance your cloud computing skills. 
+                            AWS offers a vast ecosystem of services that can help you build scalable, reliable, 
+                            and secure applications.
+                        </p>
+                        <p class="mb-0">Happy cloud computing!</p>
+                    </div>
+                    
+                    <div class="text-center mt-4">
+                        <a href="{% url 'download_aws_content' %}" class="btn btn-warning">
+                            <i class="fas fa-download me-2"></i>Download Full Study Guide
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    $(document).ready(function() {
+        // Smooth scrolling for navigation links
+        $('.nav-link').on('click', function(event) {
+            if (this.hash !== '') {
+                event.preventDefault();
+                var hash = this.hash;
+                $('html, body').animate({
+                    scrollTop: $(hash).offset().top - 70
+                }, 800);
+            }
+        });
+        
+        // Highlight active section in navigation
+        $(window).scroll(function() {
+            var scrollPosition = $(window).scrollTop();
+            
+            $('.section-title').each(function() {
+                var currentSection = $(this);
+                var sectionTop = currentSection.offset().top - 100;
+                
+                if (scrollPosition >= sectionTop) {
+                    $('.nav-link').removeClass('active');
+                    $('.nav-link[href="#' + currentSection.attr('id') + '"]').addClass('active');
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

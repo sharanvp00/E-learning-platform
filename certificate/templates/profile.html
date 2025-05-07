@@ -17,17 +17,21 @@
 </div>
 <!-- Header End -->
 
-<!-- Profile Start -->
 <div class="container-fluid py-5">
     <div class="container py-5">
         <div class="row">
+            <!-- Sidebar -->
             <div class="col-lg-4 mb-5 mb-lg-0">
                 <div class="card border-0 shadow-sm mb-4">
                     <div class="card-header bg-primary text-white">
                         <h4 class="m-0">Profile Information</h4>
                     </div>
                     <div class="card-body text-center">
-                        <i class="fa fa-user-circle fa-7x text-primary mb-4"></i>
+                        {% if profile and profile.profile_picture %}
+                            <img src="{{ profile.profile_picture.url }}" class="rounded-circle mb-3" width="120" height="120" alt="Profile Picture">
+                        {% else %}
+                            <i class="fa fa-user-circle fa-7x text-primary mb-4"></i>
+                        {% endif %}
                         <h3>{{ user.username }}</h3>
                         <p class="text-muted">{{ user.email }}</p>
                         <div class="border-top pt-3 mt-3">
@@ -50,6 +54,7 @@
                         </div>
                     </div>
                 </div>
+
                 
                 <div class="card border-0 shadow-sm">
                     <div class="card-header bg-secondary text-white">
@@ -70,14 +75,15 @@
                     </div>
                 </div>
             </div>
-            
+
+            <!-- Profile Form -->
             <div class="col-lg-8">
                 <div class="card border-0 shadow-sm mb-4">
                     <div class="card-header bg-primary text-white">
                         <h4 class="m-0">Edit Profile</h4>
                     </div>
                     <div class="card-body">
-                        <form method="post" action="">
+                        <form method="post" action="" enctype="multipart/form-data">
                             {% csrf_token %}
                             <div class="form-group">
                                 <label for="username">Username</label>
@@ -96,11 +102,28 @@
                                 <label for="last_name">Last Name</label>
                                 <input type="text" class="form-control" id="last_name" name="last_name" value="{{ user.last_name }}">
                             </div>
+                            <div class="form-group">
+                                <label for="bio">Bio</label>
+                                <textarea class="form-control" id="bio" name="bio" rows="3">{{ profile.bio }}</textarea>
+                                <small class="form-text text-muted">Tell us a little about yourself</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="profile_picture">Profile Picture</label>
+                                {% if profile.profile_picture %}
+                                    <div class="mb-2">
+                                        <img src="{{ profile.profile_picture.url }}" class="img-thumbnail" width="100" alt="Current Profile Picture">
+                                        <small class="form-text text-muted">Current profile picture</small>
+                                    </div>
+                                {% endif %}
+                                <input type="file" class="form-control-file" id="profile_picture" name="profile_picture">
+                                <small class="form-text text-muted">Upload a new profile picture (optional)</small>
+                            </div>
                             <button type="submit" class="btn btn-primary">Update Profile</button>
                         </form>
                     </div>
                 </div>
-                
+
+                <!-- Change Password -->
                 <div class="card border-0 shadow-sm">
                     <div class="card-header bg-secondary text-white">
                         <h4 class="m-0">Change Password</h4>
@@ -129,5 +152,4 @@
     </div>
 </div>
 <!-- Profile End -->
-
 {% endblock %}

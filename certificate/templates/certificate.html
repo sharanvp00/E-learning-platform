@@ -38,6 +38,25 @@
         .download-btn:hover {
             background-color: #b29030;
         }
+        
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            background-color: #4a6fa5;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+        
+        .back-btn:hover {
+            background-color: #3a5a8a;
+        }
 
         .certificate {
             width: 850px;
@@ -45,7 +64,7 @@
             border: 12px solid #d4af37;
             padding: 50px;
             text-align: center;
-            background: #ffffff url("{% static 'images/gold-corner-border.png' %}") no-repeat center;
+            background: #ffffff  no-repeat center;
             background-size: cover;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
             position: relative;
@@ -125,6 +144,7 @@
 </head>
 <body>
     <a href="{% url 'download_certificate' %}" class="download-btn">Download Certificate</a>
+    <a href="{% url 'home' %}" class="back-btn">Back to Home</a>
     
     {% if cert %}
     <div class="certificate">
@@ -133,8 +153,8 @@
         <div class="content">This Certificate Is Proudly Presented To</div>
         <div class="recipient">{{ request.user.username }}</div>
         <div class="content">For Successfully Completing the Course</div>
-        <div class="course">Python</div>
-        <div class="date">Date Issued: {{ cert.date_issued }}</div>
+        <div class="course">{{ cert.category.name }}</div>
+        <div class="date">Date Issued: {{ cert.date_issued|date:"F d, Y" }}</div>
 
         <div class="signatures">
             <div class="signature">
@@ -142,13 +162,13 @@
                 <div></div>
             </div>
             <div class="signature">
-                <div class="name">Augustin</div>
+                <div class="name">Sharan</div>
                 <div>Director</div>
             </div>
         </div>
 
         <div class="ribbon">
-            <img src="{% static 'images/hope_logo.png' %}" alt="Ribbon">
+            <img src="{% static 'images/certi.jpg' %}" alt="Ribbon">
         </div>
     </div>
     {% else %}

@@ -1,0 +1,58 @@
+{% extends "admin/index.html" %}
+{% load i18n %}
+
+{% block bodyclass %}{{ block.super }} app-{{ app_label }}{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+    &rsaquo; {% for app in app_list %}{{ app.name }}{% endfor %}
+</div>
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+    {% for app in app_list %}
+    <div class="app-{{ app.app_label }} module{% if app.app_label == 'certificate' %} expanded{% endif %}">
+        <table>
+            <caption>
+                <a href="{{ app.app_url }}" class="section" title="{% blocktranslate with name=app.name %}Models in the {{ name }} application{% endblocktranslate %}">
+                    {% if app.app_label == 'certificate' %}
+                    <i class="fas fa-certificate" style="margin-right: 5px;"></i>
+                    {% elif app.app_label == 'courses' %}
+                    <i class="fas fa-book" style="margin-right: 5px;"></i>
+                    {% elif app.app_label == 'auth' %}
+                    <i class="fas fa-users" style="margin-right: 5px;"></i>
+                    {% else %}
+                    <i class="fas fa-cog" style="margin-right: 5px;"></i>
+                    {% endif %}
+                    {{ app.name }}
+                </a>
+            </caption>
+            
+            {% for model in app.models %}
+            <tr class="model-{{ model.object_name|lower }}">
+                {% if model.admin_url %}
+                <th scope="row"><a href="{{ model.admin_url }}">{{ model.name }}</a></th>
+                {% else %}
+                <th scope="row">{{ model.name }}</th>
+                {% endif %}
+
+                {% if model.add_url %}
+                <td><a href="{{ model.add_url }}" class="addlink">{% trans 'Add' %}</a></td>
+                {% else %}
+                <td>&nbsp;</td>
+                {% endif %}
+
+                {% if model.admin_url and show_changelinks %}
+                <td><a href="{{ model.admin_url }}" class="changelink">{% trans 'Change' %}</a></td>
+                {% else %}
+                <td>&nbsp;</td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

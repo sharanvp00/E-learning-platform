@@ -28,9 +28,18 @@
                     </div>
                     <div class="card-body">
                         <div class="text-center mb-4">
-                            <i class="fa fa-user-circle fa-5x text-primary mb-3"></i>
+                            {% if profile and profile.profile_picture %}
+                                <img src="{{ profile.profile_picture.url }}" class="rounded-circle mb-3" width="120" height="120" alt="Profile Picture">
+                            {% else %}
+                                <i class="fa fa-user-circle fa-5x text-primary mb-3"></i>
+                            {% endif %}
                             <h4>{{ user.username }}</h4>
                             <p class="text-muted">{{ user.email }}</p>
+                            {% if profile.bio %}
+                                <div class="mt-2">
+                                    <p class="text-muted font-italic">"{{ profile.bio }}"</p>
+                                </div>
+                            {% endif %}
                         </div>
                         <div class="d-flex justify-content-between mb-2">
                             <span>Member Since:</span>
@@ -120,7 +129,7 @@
                                             <p class="card-text">Learn {{ category.name }} with our comprehensive course and earn a certificate.</p>
                                         </div>
                                         <div class="card-footer bg-white border-0">
-                                            <a href="{% url 'quiz' category_name=category.name %}" class="btn btn-primary btn-sm">Start Course</a>
+                                            <a href="/courses/python-masterclass/" class="btn btn-primary btn-sm">Start Course</a>
                                         </div>
                                     </div>
                                 </div>

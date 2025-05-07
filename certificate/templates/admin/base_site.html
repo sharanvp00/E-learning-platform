@@ -1,0 +1,70 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}{{ title }} | {{ site_title|default:_('E-learning Platform Admin') }}{% endblock %}
+
+{% block extrastyle %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/admin-custom.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+{% endblock %}
+
+{% block branding %}
+<h1 id="site-name">
+    <a href="{% url 'admin:index' %}">
+        <i class="fas fa-graduation-cap" style="font-size: 32px; margin-right: 10px; color: #fff;"></i>
+        E-learning Platform Administration
+    </a>
+</h1>
+{% endblock %}
+
+{% block nav-global %}
+<div class="admin-quick-links">
+    <a href="/" class="quick-link" target="_blank">
+        <i class="fas fa-home"></i> View Site
+    </a>
+    <a href="{% url 'admin:certificate_question_changelist' %}" class="quick-link">
+        <i class="fas fa-question-circle"></i> Questions
+    </a>
+    <a href="{% url 'admin:certificate_category_changelist' %}" class="quick-link">
+        <i class="fas fa-list"></i> Categories
+    </a>
+    <a href="{% url 'admin:certificate_certificate_changelist' %}" class="quick-link">
+        <i class="fas fa-certificate"></i> Certificates
+    </a>
+    <a href="{% url 'admin:auth_user_changelist' %}" class="quick-link">
+        <i class="fas fa-users"></i> Users
+    </a>
+</div>
+{% endblock %}
+
+{% block footer %}
+<div id="footer">
+    <div class="footer-content">
+        <div class="footer-section">
+            <h4>Quick Actions</h4>
+            <ul>
+                <li><a href="{% url 'admin:certificate_question_add' %}"><i class="fas fa-plus-circle"></i> Add Question</a></li>
+                <li><a href="{% url 'admin:certificate_category_add' %}"><i class="fas fa-plus-circle"></i> Add Category</a></li>
+                <li><a href="{% url 'admin:auth_user_add' %}"><i class="fas fa-user-plus"></i> Add User</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Reports</h4>
+            <ul>
+                <li><a href="{% url 'admin:certificate_certificate_changelist' %}"><i class="fas fa-chart-bar"></i> Certificate Reports</a></li>
+                <li><a href="{% url 'admin:certificate_contactmessage_changelist' %}"><i class="fas fa-envelope"></i> Contact Messages</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Help & Support</h4>
+            <ul>
+                <li><a href="https://docs.djangoproject.com/en/3.2/ref/contrib/admin/" target="_blank"><i class="fas fa-book"></i> Django Admin Docs</a></li>
+                <li><a href="mailto:support@elearningplatform.com"><i class="fas fa-envelope"></i> Contact Support</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="copyright">
+        &copy; {% now "Y" %} E-learning Platform - All Rights Reserved
+    </div>
+</div>
+{% endblock %}

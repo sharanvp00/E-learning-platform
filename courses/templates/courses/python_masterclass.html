@@ -86,21 +86,42 @@
   <div class="page-main container-fluidpy-4">
     <!-- Image -->
     {% load static %}
-    <img src="{% static 'images/python-course.png' %}" alt="Course Banner" class="course-image mb-4" style="width: 80%; height: auto;">
-
-
-
+    <style>
+      .course-banner {
+          max-width: 100%;
+          padding: 30px 0;
+          background-color: #f9f9f9;
+          text-align: center;
+      }
+  
+      .course-image {
+          display: block;
+          margin: 0 auto;
+          width: 800px;
+          max-width: 90%;
+          height: auto;
+          border-radius: 8px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+          aspect-ratio: 16/9;
+          object-fit: contain;
+      }
+  </style>
+  
+  <div class="course-banner">
+      <img src="{% static 'images/pythonthumbnail.png' %}" 
+           alt="Python Masterclass Course Banner" 
+           class="course-image mb-4">
+  </div>
+  
     <!-- Course Title -->
     <h3>Complete Python Masterclass for Web Development</h3>
 
     <!-- Course Description -->
     <h5 class="section-title">Course Description</h5>
     <p>
-      Eu adipiscing nec erat amet at aliquam blandit gravida massa suscipit massa fames nibh dapibus
-      tristique dolor a cursus maecenas praesent elit donec faucibus eget commodo ultricies amet molestie
-      nunc sit sed enim magna et viverra purus blandit amet a cursus elementum ipsum sit accumsan blandit
-      pretium vitae mollis sociis mauris nulla varius bibendum fames facilisis elit, donec et ultrices neque
-      mauris, aenean morbi.
+      Unlock the full potential of Python programming with this comprehensive course designed for learners who want to deepen their understanding of advanced Python concepts. Whether you're aiming to build robust applications, automate workflows, or prepare for technical interviews, this course will guide you through powerful Python features with real-world applications.
+
+You’ll explore topics such as object-oriented programming, file handling, error management, decorators, generators, and working with modules and packages. By the end of this course, you'll be equipped to write clean, efficient, and scalable Python code.
     </p>
 
     <!-- What You'll Learn + Testimonial -->
@@ -132,6 +153,14 @@
 
 <div class="lesson-box d-flex align-items-center mb-2">
   <a href="/courses/python-advance" class="text-decoration-none text-dark">Python Advanced</a>
+</div>
+
+<div class="lesson-box d-flex align-items-center mb-2">
+  <a href="/quiz/Python/" 
+     class="text-decoration-none" 
+     style="color: black; font-weight: bold;">
+    Quiz
+  </a>
 </div>
 
 
