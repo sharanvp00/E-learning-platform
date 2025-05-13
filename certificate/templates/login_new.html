@@ -180,7 +180,7 @@
         <!-- Login Section -->
         <div class="login"> 
             <h2>Welcome Back!</h2>
-            <p>Don’t have an account yet? <a href="/register/">Sign Up</a></p>
+            <p>Don't have an account yet? <a href="/register/">Sign Up</a></p>
 
             <!-- Login Required Notification -->
             {% if login_required %}
@@ -188,6 +188,7 @@
                 <i class="fas fa-lock"></i> Login required to access the requested page
             </div>
             {% endif %}
+
             <!-- Error Message Block -->
             {% if messages %}
                 {% for message in messages %}
@@ -202,16 +203,14 @@
                 <input type="text" name="username" placeholder="Username" required>
                 <input type="password" name="password" placeholder="Password" required>
                 <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <div></div>
-                    <a href="{% url 'forgot_password' %}">Forgot Password?</a>
-                    
+                    <label><input type="checkbox" name="remember"> Keep me logged in</label>
+                    <a href="#">Forgot Password?</a>
                 </div>
-                <div></div>
                 <button type="submit">Login</button>
             </form>
         </div>
     </div>
-</body>
+
     <script>
         // Check if the URL contains the login_required parameter
         document.addEventListener('DOMContentLoaded', function() {
@@ -225,4 +224,5 @@
             }
         });
     </script>
+</body>
 </html>

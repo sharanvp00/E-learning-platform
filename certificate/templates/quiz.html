@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Multi-Page Quiz</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -18,26 +19,86 @@
             height: 100vh;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(to right, #6dd5ed, #2193b0);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
 
         .container {
-            width: 800px;
-            padding: 30px;
+            width: 850px;
+            padding: 35px;
             background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .timer-container {
+            display: flex;
+            align-items: center;
+            background-color: #f8f9fa;
+            padding: 10px 15px;
+            border-radius: 50px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .timer-icon {
+            color: #ff6b6b;
+            margin-right: 8px;
+            font-size: 1.2rem;
+        }
+
+        .timer {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #444;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+            border-radius: 10px;
+            transition: width 0.3s ease;
         }
 
         h2 {
-            font-size: 2rem;
-            margin-bottom: 20px;
+            font-size: 2.2rem;
             color: #333;
+            font-weight: 700;
+        }
+
+        .question-counter {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 20px;
         }
 
         .question {
             display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .active {
@@ -47,85 +108,191 @@
         .question p {
             font-size: 1.75rem;
             font-weight: 600;
-            color: #444;
-            margin-bottom: 15px;
+            color: #333;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
         }
 
         label {
-            display: block;
-            font-size: 1.2rem;
-            margin: 8px 0;
-            padding: 10px;
-            background: #f1faff;
-            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            font-size: 1.1rem;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
             cursor: pointer;
-            transition: background 0.3s ease;
+            transition: all 0.3s ease;
+            text-align: left;
+            border: 2px solid transparent;
         }
 
         label:hover {
-            background: #d1f0ff;
+            background: #e9f5ff;
+            border-color: #4facfe;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(79, 172, 254, 0.15);
         }
 
         input[type="radio"] {
-            margin-right: 10px;
+            margin-right: 12px;
+            transform: scale(1.2);
         }
 
         .navigation {
-            margin-top: 30px;
+            margin-top: 35px;
+            display: flex;
+            justify-content: space-between;
         }
 
         button {
-            padding: 12px 18px;
-            margin: 5px;
+            padding: 12px 24px;
             border: none;
-            border-radius: 8px;
+            border-radius: 50px;
             cursor: pointer;
-            background-color: #007bff;
-            color: white;
+            font-weight: 600;
             font-size: 1rem;
-            transition: background 0.3s ease, transform 0.2s ease;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        button:hover {
-            background-color: #0056b3;
-            transform: scale(1.05);
+        #prev {
+            background-color: #f8f9fa;
+            color: #555;
+        }
+
+        #prev:hover:not(:disabled) {
+            background-color: #e9ecef;
+            transform: translateX(-3px);
+        }
+
+        #next, #submit {
+            background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+
+        #next:hover, #submit:hover {
+            background: linear-gradient(to right, #3d9be9 0%, #00d8e4 100%);
+            transform: translateX(3px);
+            box-shadow: 0 5px 15px rgba(79, 172, 254, 0.3);
         }
 
         button:disabled {
-            background-color: #b0c4de;
+            opacity: 0.5;
             cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        .btn-icon {
+            margin: 0 8px;
+        }
+
+        /* Time warning styles */
+        .warning .timer {
+            color: #ff6b6b;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Responsive styles */
+        @media (max-width: 900px) {
+            .container {
+                width: 90%;
+                padding: 25px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .options-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .question p {
+                font-size: 1.5rem;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2> Quiz!</h2>
+        <div class="quiz-header">
+            <h2>Interactive Quiz</h2>
+            <div class="timer-container" id="timer-container">
+                <i class="fas fa-clock timer-icon"></i>
+                <div class="timer" id="timer">15:00</div>
+            </div>
+        </div>
+        
+        <div class="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        
+        <div class="question-counter" id="question-counter">Question 1 of {{ questions|length }}</div>
         
         <form id="quiz-form" method="post">
             {% csrf_token %}
+            <input type="hidden" name="time_taken" id="time-taken" value="0">
             {% for question in questions %}
                 <div class="question {% if forloop.first %}active{% endif %}" id="question_{{ question.id }}">
                     <p>{{ question.text }}</p>
-                    <label><input type="radio" name="question_{{ question.id }}" value="1"> {{ question.option1 }}</label>
-                    <label><input type="radio" name="question_{{ question.id }}" value="2"> {{ question.option2 }}</label>
-                    <label><input type="radio" name="question_{{ question.id }}" value="3"> {{ question.option3 }}</label>
-                    <label><input type="radio" name="question_{{ question.id }}" value="4"> {{ question.option4 }}</label>
+                    <div class="options-container">
+                        <label><input type="radio" name="question_{{ question.id }}" value="1"> {{ question.option1 }}</label>
+                        <label><input type="radio" name="question_{{ question.id }}" value="2"> {{ question.option2 }}</label>
+                        <label><input type="radio" name="question_{{ question.id }}" value="3"> {{ question.option3 }}</label>
+                        <label><input type="radio" name="question_{{ question.id }}" value="4"> {{ question.option4 }}</label>
+                    </div>
                 </div>
             {% endfor %}
             <div class="navigation">
-                <button type="button" id="prev" disabled>⬅ Previous</button>
-                <button type="button" id="next">Next ➡</button>
-                <button type="submit" id="submit" style="display: none;">🚀 Submit</button>
+                <button type="button" id="prev" disabled><i class="fas fa-arrow-left btn-icon"></i>Previous</button>
+                <button type="button" id="next">Next<i class="fas fa-arrow-right btn-icon"></i></button>
+                <button type="submit" id="submit" style="display: none;"><i class="fas fa-paper-plane btn-icon"></i>Submit</button>
             </div>
         </form>
     </div>
 
     <script>
+        // Quiz navigation
         let currentQuestion = 0;
         const questions = document.querySelectorAll(".question");
         const prevButton = document.getElementById("prev");
         const nextButton = document.getElementById("next");
         const submitButton = document.getElementById("submit");
+        const progressBar = document.getElementById("progress-bar");
+        const questionCounter = document.getElementById("question-counter");
+        const totalQuestions = questions.length;
+
+        // Timer functionality
+        let timeLeft = 15 * 60; // 15 minutes in seconds
+        let timerInterval;
+        const timerDisplay = document.getElementById("timer");
+        const timerContainer = document.getElementById("timer-container");
+        const timeInput = document.getElementById("time-taken");
+        const startTime = Date.now();
+
+        function updateProgressBar() {
+            const progress = ((currentQuestion + 1) / totalQuestions) * 100;
+            progressBar.style.width = `${progress}%`;
+            questionCounter.textContent = `Question ${currentQuestion + 1} of ${totalQuestions}`;
+        }
 
         function updateButtons() {
             prevButton.disabled = currentQuestion === 0;
@@ -136,8 +303,36 @@
         function showQuestion(index) {
             questions.forEach((q, i) => q.classList.toggle("active", i === index));
             updateButtons();
+            updateProgressBar();
         }
 
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            // Update the hidden input with time taken so far (in seconds)
+            const timeTaken = Math.floor((Date.now() - startTime) / 1000);
+            timeInput.value = timeTaken;
+            
+            // Warning when less than 2 minutes left
+            if (timeLeft <= 120) {
+                timerContainer.classList.add("warning");
+            }
+            
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                alert("Time's up! Your quiz will be submitted automatically.");
+                document.getElementById("quiz-form").submit();
+            }
+            
+            timeLeft--;
+        }
+
+        // Initialize timer
+        timerInterval = setInterval(updateTimer, 1000);
+
+        // Navigation event listeners
         nextButton.addEventListener("click", () => {
             if (currentQuestion < questions.length - 1) {
                 currentQuestion++;
@@ -152,7 +347,17 @@
             }
         });
 
+        // Form submission
+        document.getElementById("quiz-form").addEventListener("submit", function(e) {
+            clearInterval(timerInterval);
+            // Final update of time taken
+            const timeTaken = Math.floor((Date.now() - startTime) / 1000);
+            timeInput.value = timeTaken;
+        });
+
+        // Initialize the quiz
         showQuestion(currentQuestion);
+        updateProgressBar();
     </script>
 </body>
 </html>

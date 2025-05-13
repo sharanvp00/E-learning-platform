@@ -3,6 +3,13 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+
+
+
+
+
+
+
 # User Profile model to extend the built-in User
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -39,7 +46,7 @@ class Category(models.Model):
         ('Python', 'Python'),
         ('AWS', 'AWS'),
         ('Tally', 'Tally'),
-        ('PowerBi', 'PowerBi'),
+        
     )
     name = models.CharField(max_length=50, choices=CATEGORY_CHOICES, unique=True, default='Python')
 

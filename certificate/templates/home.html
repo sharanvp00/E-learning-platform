@@ -45,7 +45,13 @@
                     <div class="col-lg-4 col-md-6 mb-4">
                         <div class="bg-white p-3">
                             <h5>{{ category.name }}</h5>
-                            <a href="{% url 'quiz' category_name=category.name %}" class="btn btn-primary mt-2">View Course</a>
+                            {% if category.name == 'Python' %}
+                                <a href="/courses/python-masterclass/" class="btn btn-primary mt-2">View Course</a>
+                            {% elif category.name == 'AWS' %}
+                                <a href="/courses/aws-masterclass/" class="btn btn-primary mt-2">View Course</a>
+                            {% else %}
+                                <a href="{% url 'quiz' category_name=category.name %}" class="btn btn-primary mt-2">View Course</a>
+                            {% endif %}
                         </div>
                     </div>
                     {% empty %}

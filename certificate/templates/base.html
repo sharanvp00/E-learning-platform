@@ -26,6 +26,132 @@
     <link href="{% static 'css/style.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/fixes.css' %}" rel="stylesheet">
     
+    <style>
+        /* Login Popup Styles */
+        .login-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .login-popup.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .login-popup-content {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+        }
+
+        .login-popup.show .login-popup-content {
+            transform: translateY(0);
+        }
+
+        .close-popup {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.2s ease;
+        }
+
+        .close-popup:hover {
+            color: #333;
+        }
+
+        .popup-icon {
+            margin-bottom: 15px;
+        }
+
+        .popup-icon i {
+            font-size: 50px;
+            color: #4e6dd6;
+            background-color: #f4f7ff;
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+        }
+
+        .login-popup h2 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+
+        .login-popup p {
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 16px;
+        }
+
+        .popup-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .btn-login, .btn-register {
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn-login {
+            background-color: #4e6dd6;
+            color: white;
+        }
+
+        .btn-register {
+            background-color: #f4f7ff;
+            color: #4e6dd6;
+            border: 1px solid #4e6dd6;
+        }
+
+        .btn-login:hover, .btn-register:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            .popup-buttons {
+                flex-direction: column;
+            }
+            
+            .btn-login, .btn-register {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+    
     {% block extra_css %}{% endblock %}
 </head>
 
@@ -46,40 +172,41 @@
     <!-- Topbar End -->
 
     <!-- Navbar Start -->
-    <div class="container-fluid p-0">
-        <nav class="navbar navbar-expand-lg bg-white navbar-light py-3 py-lg-0 px-lg-5">
-            <a href="{% url 'home' %}" class="navbar-brand ml-lg-3">
-                <h1 class="m-0 text-uppercase text-primary"><i class="fa fa-book-reader mr-3"></i>E-learning Platform</h1>
-            </a>
-            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-between px-lg-3" id="navbarCollapse">
-                <div class="navbar-nav mx-auto py-0">
-                    <a href="{% url 'home' %}" class="nav-item nav-link {% if request.path == '/' or request.path == '/home/' %}active{% endif %}">Home</a>
-                    <a href="{% url 'dashboard' %}" class="nav-item nav-link {% if request.path == '/dashboard/' %}active{% endif %}">Dashboard</a>
-                    <a href="{% url 'quiz_selection' %}" class="nav-item nav-link {% if request.path == '/quiz/selection/' %}active{% endif %}">Courses</a>
-                    <a href="/coursepage/" class="nav-item nav-link {% if '/courses/' in request.path %}active{% endif %}">Course Content</a>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">My Account</a>
-                        <div class="dropdown-menu m-0">
-                            <a href="{% url 'profile' %}" class="dropdown-item">Profile</a>
-                            <a href="{% url 'certificate' %}" class="dropdown-item">My Certificates</a>
-                            {% if user.is_authenticated %}
-                                <a href="{% url 'logout' %}" class="dropdown-item">Logout</a>
-                            {% endif %}
-                        </div>
+   <div class="container-fluid p-0">
+    <nav class="navbar navbar-expand-lg bg-white navbar-light py-3 py-lg-0 px-lg-5">
+        <a href="{% url 'home' %}" class="navbar-brand ml-lg-3">
+            <h1 class="m-0 text-uppercase text-primary"><i class="fa fa-book-reader mr-3"></i>E-learning Platform</h1>
+        </a>
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-between px-lg-3" id="navbarCollapse">
+            <div class="navbar-nav mx-auto py-0">
+                <a href="{% url 'home' %}" class="nav-item nav-link {% if request.path == '/' or request.path == '/home/' %}active{% endif %}">Home</a>
+                <a href="{% url 'dashboard' %}" class="nav-item nav-link {% if request.path == '/dashboard/' %}active{% endif %}">Dashboard</a>
+                <a href="{% url 'quiz_selection' %}" class="nav-item nav-link {% if request.path == '/quiz/selection/' %}active{% endif %}">Course&nbsp;content</a>
+                <a href="/coursepage/" class="nav-item nav-link {% if '/courses/' in request.path %}active{% endif %}">Courses</a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">My Account</a>
+                    <div class="dropdown-menu m-0">
+                        <a href="{% url 'profile' %}" class="dropdown-item">Profile</a>
+                        <a href="{% url 'certificate' %}" class="dropdown-item"></a>
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'logout' %}" class="dropdown-item">Logout</a>
+                        {% endif %}
                     </div>
                 </div>
-                {% if user.is_authenticated %}
-                    <a href="{% url 'profile' %}" class="btn btn-primary py-2 px-4 d-none d-lg-block">My Profile</a>
-                {% else %}
-                    <a href="{% url 'login' %}" class="btn btn-primary py-2 px-4 d-none d-lg-block">Login</a>
-                    <a href="{% url 'register' %}" class="btn btn-secondary py-2 px-4 d-none d-lg-block ml-2">Register</a>
-                {% endif %}
             </div>
-        </nav>
-    </div>
+            {% if user.is_authenticated %}
+                <a href="{% url 'profile' %}" class="btn btn-primary py-2 px-4 d-none d-lg-block">My Profile</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn btn-primary py-2 px-4 d-none d-lg-block">Login</a>
+                <a href="{% url 'register' %}" class="btn btn-secondary py-2 px-4 d-none d-lg-block ml-2">Register</a>
+            {% endif %}
+        </div>
+    </nav>
+</div>
+
     <!-- Navbar End -->
 
     {% block content %}{% endblock %}
@@ -148,6 +275,22 @@
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary rounded-0 btn-lg-square back-to-top"><i class="fa fa-angle-double-up"></i></a>
 
+    <!-- Login Popup (Hidden by default) -->
+    <div id="login-popup" class="login-popup">
+        <div class="login-popup-content">
+            <span id="close-popup" class="close-popup">&times;</span>
+            <div class="popup-icon">
+                <i class="fas fa-lock"></i>
+            </div>
+            <h2>Login Required</h2>
+            <p>You need to be logged in to access this page.</p>
+            <div class="popup-buttons">
+                <a href="{% url 'login' %}" class="btn-login">Login Now</a>
+                <a href="{% url 'register' %}" class="btn-register">Register</a>
+            </div>
+        </div>
+    </div>
+
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
@@ -158,6 +301,43 @@
 
     <!-- Template Javascript -->
     <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/login-popup.js' %}"></script>
+    
+    <script>
+        // Check if the URL contains the login_required parameter
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const loginRequired = urlParams.get('login_required');
+            
+            if (loginRequired === 'true') {
+                // Show the login popup
+                const popup = document.getElementById('login-popup');
+                if (popup) {
+                    popup.style.display = 'flex';
+                    setTimeout(() => {
+                        popup.classList.add('show');
+                    }, 10);
+                }
+                
+                // Remove the parameter from the URL without refreshing the page
+                const newUrl = window.location.pathname;
+                window.history.replaceState({}, document.title, newUrl);
+            }
+            
+            // Close popup when clicking outside or on close button
+            document.addEventListener('click', function(event) {
+                const popup = document.getElementById('login-popup');
+                const closeBtn = document.getElementById('close-popup');
+                
+                if (popup && (event.target === popup || event.target === closeBtn)) {
+                    popup.classList.remove('show');
+                    setTimeout(() => {
+                        popup.style.display = 'none';
+                    }, 300);
+                }
+            });
+        });
+    </script>
     
     {% block extra_js %}{% endblock %}
 </body>

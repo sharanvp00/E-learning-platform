@@ -8,7 +8,7 @@ urlpatterns = [
     path('certificate/', views.certificate, name='certificate'),
     path('logout/', views.user_logout, name='logout'),
     path('quiz_selection/', views.quiz_selection, name='quiz_selection'),
-    path('quiz/<str:category_name>/', views.quiz, name='quiz'),
+    path('quiz/<str:category_name>z/', views.quiz, name='quiz'),
     path('result/<int:score>/<int:total>/<str:passed>/<str:category_name>/', views.result, name='result'),
     path('download_certificate/', views.generate_certificate_pdf, name='download_certificate'),
     path('python-content/', views.python_content, name='python_content'),
@@ -19,6 +19,7 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('dashboard/', views.dashboard, name='dashboard'),
     path('profile/', views.profile, name='profile'),
-    path('coursepage/', views.course_page, name='coursepage')
+    path('coursepage/', views.course_page, name='coursepage'),
+    path('forgot-password/', views.forgot_password, name='forgot_password')
     
 ]

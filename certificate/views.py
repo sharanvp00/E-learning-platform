@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
+from .decorators import login_required_with_popup
 from django.contrib import messages
 from django.urls import reverse
 from django.contrib.auth.models import User
@@ -150,6 +151,9 @@ def register(request):
 
 # Login View
 def login_view(request):
+    # Check if the login_required parameter is present
+    login_required = request.GET.get('login_required') == 'true'
+    
     if request.method == "POST":
         username = request.POST.get("username")
         password = request.POST.get("password")
@@ -158,21 +162,26 @@ def login_view(request):
         if user is not None:
             login(request, user)
             messages.success(request, "Logged in successfully!")
+            
+            # If there's a next parameter, redirect there
+            next_url = request.GET.get('next')
+            if next_url:
+                return redirect(next_url)
             return redirect("home")
         else:
             messages.error(request, "Invalid username or password!")
             return redirect("login")
 
-    return render(request, "login.html")
+    return render(request, "login.html", {'login_required': login_required})
 
 # Quiz Selection View
-@login_required
+@login_required_with_popup
 def quiz_selection(request):
     categories = Category.objects.all()
     return render(request, "quiz_selection.html", {"categories": categories})
 
 # Quiz View
-@login_required
+@login_required_with_popup
 def quiz(request, category_name):
     category = Category.objects.get(name=category_name)
     questions = Question.objects.filter(category=category)
@@ -197,12 +206,12 @@ def quiz(request, category_name):
     return render(request, 'quiz.html', {'questions': questions, 'category': category})
 
 # Result View
-@login_required
+@login_required_with_popup
 def result(request, score, total, passed, category_name):
     return render(request, 'result.html', {'score': score, 'total': total, 'passed': passed, 'category_name': category_name})
 
 # Certificate View
-@login_required
+@login_required_with_popup
 def certificate(request):
     user_certificates = Certificate.objects.filter(user=request.user)
 
@@ -215,7 +224,7 @@ def certificate(request):
     return render(request, 'certificate.html', {'cert': cert})
 
 # Generate Certificate PDF
-@login_required
+@login_required_with_popup
 def generate_certificate_pdf(request):
     user = request.user
     cert = Certificate.objects.filter(user=user).select_related('category').last()
@@ -260,7 +269,7 @@ def generate_certificate_pdf(request):
 def python_content(request):
     return render(request, 'pythoncontent.html')
 
-@login_required
+@login_required_with_popup
 def view_python_content(request):
     """
     View Python course content as a comprehensive study guide in HTML format
@@ -279,7 +288,7 @@ def view_python_content(request):
         messages.error(request, "Python course content not available")
         return redirect('quiz_selection')
 
-@login_required
+@login_required_with_popup
 def view_aws_content(request):
     """
     View AWS Cloud Computing content as a comprehensive study guide in HTML format
@@ -298,7 +307,7 @@ def view_aws_content(request):
         messages.error(request, "AWS course content not available")
         return redirect('quiz_selection')
 
-@login_required
+@login_required_with_popup
 def download_aws_content(request):
     """
     Download AWS Cloud Computing content as a comprehensive study guide in text format
@@ -495,7 +504,7 @@ def download_aws_content(request):
     except Category.DoesNotExist:
         return HttpResponse("AWS course content not available", content_type="text/plain")
 
-@login_required
+@login_required_with_popup
 def download_python_content(request):
     """
     Download Python course content as a comprehensive study guide in text format
@@ -821,7 +830,7 @@ def download_python_content(request):
         return HttpResponse("Python course content not available", content_type="text/plain")
 
 # Dashboard View
-@login_required
+@login_required_with_popup
 def dashboard(request):
     user = request.user
     profile, created = UserProfile.objects.get_or_create(user=user)
@@ -835,8 +844,21 @@ def dashboard(request):
         'categories': categories
     })
 
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+
+        if user:
+            login(request, user)
+            return redirect('home')  # Replace with your success redirect
+        else:
+            messages.error(request, "Invalid username or password")
+
+    return render(request, 'login.html')
 # Profile View
-@login_required
+@login_required_with_popup
 def profile(request):
     user = request.user
     # Get or create the user profile
@@ -889,4 +911,35 @@ def profile(request):
 
 
 # UserProfile is now imported at the top of the file
+
+# Forgot Password View
+def forgot_password(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        
+        # Check if the email exists in the database
+        if User.objects.filter(email=email).exists():
+            user = User.objects.get(email=email)
+            
+            # If email verification is successful, show password reset form
+            if 'new_password' in request.POST:
+                new_password = request.POST.get('new_password')
+                confirm_password = request.POST.get('confirm_password')
+                
+                if new_password != confirm_password:
+                    messages.error(request, "Passwords do not match!")
+                    return render(request, 'forgot_password.html', {'email_verified': True, 'email': email})
+                
+                # Update the password
+                user.set_password(new_password)
+                user.save()
+                messages.success(request, "Password has been reset successfully! Please login with your new password.")
+                return redirect('login')
+            
+            # Show the password reset form
+            return render(request, 'forgot_password.html', {'email_verified': True, 'email': email})
+        else:
+            messages.error(request, "No account found with this email address!")
+    
+    return render(request, 'forgot_password.html', {'email_verified': False})
 
